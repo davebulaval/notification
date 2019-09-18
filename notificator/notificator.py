@@ -77,8 +77,7 @@ class EmailNotificator:
 
     """
 
-    def __init__(self, sender_email: str, sender_login_credential: str, destination_email: str,
-                 smtp_server: SMTP):
+    def __init__(self, sender_email: str, sender_login_credential: str, destination_email: str, smtp_server: SMTP):
         self.sender_email = sender_email
         self.sender_login_credential = sender_login_credential
         self.destination_email = destination_email
