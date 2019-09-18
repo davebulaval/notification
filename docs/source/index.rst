@@ -6,14 +6,14 @@
 :github_url: https://github.com/davebulaval/notification
 
 .. meta::
-   :description: Notification is a package to send notification from a python script.
+   :description: Notif is a package to send notification from a python script.
    :keywords: notification, python
    :author: David Beauchemin
 
 Notification
 ===============
 
-Notification is a easy to use package to send notification from a python script.
+Notif is a easy to use package to send notification from a python script.
 
 Use this package to send during or at the end of a python script a
     - Slack notification
@@ -24,7 +24,7 @@ Installation
 
 .. code-block:: sh
 
-   pip install notification
+   pip install notif
 
 API Reference
 =============
