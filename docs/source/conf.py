@@ -16,7 +16,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
-from notification import __version__ as version
+from notificator.version import __version__ as version
 
 # -- Project information -----------------------------------------------------
 

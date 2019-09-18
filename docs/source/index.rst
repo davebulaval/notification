@@ -19,13 +19,11 @@ Use this package to send during or at the end of a python script a
     - Slack notification
     - email notification.
 
-- Train models easily.
-- Use callbacks to save your best model, perform early stopping and much more.
-
 Installation
 ============
 
 .. code-block:: sh
+
    pip install notification
 
 API Reference
@@ -36,10 +34,3 @@ API Reference
    :caption: Package Reference
 
    notificator
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`

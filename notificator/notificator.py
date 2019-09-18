@@ -17,6 +17,9 @@ class SlackNotificator:
         headers (dict): The headers of the notification.
 
     Exemple:
+
+    .. code-block:: python
+
         notificator = SlackNotificator(url="webhook_url")
         notificator.send_notification("The script is finish")
 
@@ -57,23 +60,28 @@ class EmailNotificator:
         smtp_server (SMTP): The smtp server.
 
     Exemple:
-        Using gmail server::
-            sender_email = "my_email"
-            sender_login_credential = "my_password"
-            destination_email = sender_email
-            smtp_server = smtplib.SMTP('smtp.gmail.com',587)
 
-            notificator = EmailNotificator(sender_email, sender_login_credential, destination_email, smtp_server)
-            notificator.send_notification(subject="subject", text="text")
+        Using gmail server::
+
+                sender_email = "my_email"
+                sender_login_credential = "my_password"
+                destination_email = sender_email
+                smtp_server = smtplib.SMTP('smtp.gmail.com',587)
+
+                notificator = EmailNotificator(sender_email, sender_login_credential,
+                                               destination_email, smtp_server)
+                notificator.send_notification(subject="subject", text="text")
 
         Using hotmail server::
-            sender_email = "my_email"
-            sender_login_credential = "my_password"
-            destination_email = "other_email"
-            smtp_server = smtplib.SMTP('smtp.live.com',587)
 
-            notificator = EmailNotificator(sender_email, sender_login_credential, destination_email, smtp_server)
-            notificator.send_notification(subject="subject", text="text")
+                sender_email = "my_email"
+                sender_login_credential = "my_password"
+                destination_email = "other_email"
+                smtp_server = smtplib.SMTP('smtp.live.com',587)
+
+                notificator = EmailNotificator(sender_email, sender_login_credential,
+                                               destination_email, smtp_server)
+                notificator.send_notification(subject="subject", text="text")
 
     """
 
@@ -92,7 +100,6 @@ class EmailNotificator:
             text (str): The text of the email.
 
         """
-
         self.smtp_server.ehlo()
         self.smtp_server.starttls()
 

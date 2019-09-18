@@ -1,11 +1,11 @@
 .. role:: hidden
     :class: hidden-section
 
-notification.notificator
+notificator
 ===========================
 
 .. automodule:: notificator
-.. currentmodule:: notification.notificator
+.. currentmodule:: notificator.notificator
 
 Slack notificator
 ---------------------
@@ -14,6 +14,6 @@ Slack notificator
     :members:
 
 Email notificator
-------------
+--------------------
 
 .. autoclass:: EmailNotificator
