@@ -5,22 +5,75 @@ import requests
 
 
 class SlackNotificator:
+    # pylint: disable=line-too-long
     """
+    Notificator to send a notification into a Slack channel.
+
+    Args:
+        webhook_url (str): a webhook url given by Slack to post content into a channel. See `here <https://api.slack.com/incoming-webhooks/>`_ for more detail.
+
+    Attributes:
+        webhook_url (str): The webhook url to push notification to.
+        headers (dict): The headers of the notification.
+
+    Exemple:
+        notificator = SlackNotificator(url="webhook_url")
+        notificator.send_notification("The script is finish")
 
     """
 
-    def __init__(self, url: str):
-        self.url = url
+    def __init__(self, webhook_url: str):
+        self.webhook_url = webhook_url
         self.headers = {'content-type': 'application/json'}
 
-    def send_notification(self, message):
+    def send_notification(self, message: str) -> None:
+        """
+        Send a notificiation message to the webhook url.
+
+        Args:
+            message (str): The message to send as a notification message to the webhook url.
+
+        """
         payload_message = {"text": message}
 
-        requests.post(self.url, data=json.dumps(payload_message), headers=self.headers)
+        requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
 
 
 class EmailNotificator:
+    # pylint: disable=line-too-long
     """
+    Notificator to send a notification email.
+
+    Args:
+        sender_email (str): The email of the sender.
+        sender_login_credential (str): The login credential of the sender email.
+        destination_email (str): The recipient of  the email, can be the same as the sender_email.
+        smtp_server (SMTP): The smtp server to relay the email.
+
+    Attributes:
+        sender_email (str): The email of the sender.
+        sender_login_credential (str): The login credential of the sender.
+        destination_email (str): The email of the recipient of the notification.
+        smtp_server (SMTP): The smtp server.
+
+    Exemple:
+        Using gmail server::
+            sender_email = "my_email"
+            sender_login_credential = "my_password"
+            destination_email = sender_email
+            smtp_server = smtplib.SMTP('smtp.gmail.com',587)
+
+            notificator = EmailNotificator(sender_email, sender_login_credential, destination_email, smtp_server)
+            notificator.send_notification(subject="subject", text="text")
+
+        Using hotmail server::
+            sender_email = "my_email"
+            sender_login_credential = "my_password"
+            destination_email = "other_email"
+            smtp_server = smtplib.SMTP('smtp.live.com',587)
+
+            notificator = EmailNotificator(sender_email, sender_login_credential, destination_email, smtp_server)
+            notificator.send_notification(subject="subject", text="text")
 
     """
 
@@ -32,6 +85,15 @@ class EmailNotificator:
         self.smtp_server = smtp_server
 
     def send_notification(self, subject, text):
+        """
+        Send a notificiation message to the destination email.
+
+        Args:
+            subject (str): The subject to been show in the email.
+            text (str): The text of the email.
+
+        """
+
         self.smtp_server.ehlo()
         self.smtp_server.starttls()
 
