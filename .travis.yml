@@ -8,8 +8,8 @@ install:
   - pip install -q yapf==0.27
   - pip install -q pylint==2.3.1
 script:
-  - yapf --diff --recursive poutyne/
-  - pylint poutyne/
+  - yapf --diff --recursive job_notifaction/
+  - pylint job_notifaction/
   - cd docs
   - ./rebuild_html_doc.sh
   - cd ..
@@ -20,4 +20,4 @@ deploy:
   local-dir: "./docs/_build/html/"
   provider: pages
   on:
-    branch: stable
+    branch: master
