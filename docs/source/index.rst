@@ -10,7 +10,7 @@
    :keywords: notification, python
    :author: David Beauchemin
 
-Notification
+Notif - The notification package
 ===============
 
 Notif is a easy to use package to send notification from a python script.
