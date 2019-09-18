@@ -16,13 +16,13 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
-from job_notification import __version__ as version
+from notification import __version__ as version
 
 # -- Project information -----------------------------------------------------
 
-project = 'Poutyne'
-copyright = '2018, Frédérik Paradis'
-author = 'Frédérik Paradis'
+project = 'Notification'
+copyright = '2019, David Beauchemin'
+author = 'David Beauchemin'
 
 # The short X.Y version
 version = version
@@ -104,7 +104,7 @@ html_extra_path = ['CNAME']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Poutynedoc'
+htmlhelp_basename = 'Notificationdoc'
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -130,14 +130,14 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Poutyne.tex', 'Poutyne Documentation', 'Frédérik Paradis', 'manual'),
+    (master_doc, 'Notification.tex', 'Notification Documentation', 'David Beauchemin', 'manual'),
 ]
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'poutyne', 'Poutyne Documentation', [author], 1)]
+man_pages = [(master_doc, 'notification', 'Notification Documentation', [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -145,7 +145,7 @@ man_pages = [(master_doc, 'poutyne', 'Poutyne Documentation', [author], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Poutyne', 'Poutyne Documentation', author, 'Poutyne', 'One line description of project.',
+    (master_doc, 'Notification', 'Notification Documentation', author, 'Notification', 'One line description of project.',
      'Miscellaneous'),
 ]
 
