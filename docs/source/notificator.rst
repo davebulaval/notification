@@ -4,8 +4,8 @@
 notification.notificator
 ===========================
 
-.. automodule:: notification
-.. currentmodule:: notification.framework
+.. automodule:: notificator
+.. currentmodule:: notification.notificator
 
 Slack notificator
 ---------------------
