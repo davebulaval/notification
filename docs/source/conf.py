@@ -16,11 +16,11 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
-from notificator.version import __version__ as version
+from notif.version import __version__ as version
 
 # -- Project information -----------------------------------------------------
 
-project = 'Notification'
+project = 'Notif'
 copyright = '2019, David Beauchemin'
 author = 'David Beauchemin'
 
@@ -104,7 +104,7 @@ html_extra_path = ['CNAME']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Notificationdoc'
+htmlhelp_basename = 'Notif'
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -130,14 +130,14 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Notification.tex', 'Notification Documentation', 'David Beauchemin', 'manual'),
+    (master_doc, 'Notif.tex', 'Notif Documentation', 'David Beauchemin', 'manual'),
 ]
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'notification', 'Notification Documentation', [author], 1)]
+man_pages = [(master_doc, 'notif', 'Notif Documentation', [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -145,7 +145,7 @@ man_pages = [(master_doc, 'notification', 'Notification Documentation', [author]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Notification', 'Notification Documentation', author, 'Notification', 'One line description of project.',
+    (master_doc, 'Notif', 'Notif Documentation', author, 'Notif', 'The package for notification.',
      'Miscellaneous'),
 ]
 

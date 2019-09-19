@@ -5,33 +5,33 @@ import traceback
 def notification_on_fail(notificator, verbose_level=3):
     # pylint: disable=line-too-long
     """
-    Decorator to wrap a function to track if the script fail and push notification to a previously set notificator.
+    Decorator to wrap a function to track if the script fail and push notification to a previously set notif.
 
     Args:
 
-        notificator (Notificator): The notificator to push notification threw.
+        notificator (Notificator): The notif to push notification threw.
         verbose_level (int) or (str): The verbose level of the notification message, 1 been the lesser and 3 the maximum
         of verbosity.
 
     Returns:
-        A wrapped function which will now catch if an error occur and throw a notification threw the notificator.
+        A wrapped function which will now catch if an error occur and throw a notification threw the notif.
 
     Example:
 
         .. code-block:: python
 
-            notificator = Client('email', 'password')
+            notif = Client('email', 'password')
 
-            @notification_on_fail(notificator=notificator, verbose_level='2')
+            @notification_on_fail(notif=notif, verbose_level='2')
             def fail_test():
                 print(t)
 
 
         .. code-block:: python
 
-            notificator = Client('email', 'password')
+            notif = Client('email', 'password')
 
-            @notification_on_fail(notificator=notificator, verbose_level='2')
+            @notification_on_fail(notif=notif, verbose_level='2')
             def main():
                 print(t)
 

@@ -34,8 +34,8 @@ class SlackNotificator:
 
     .. code-block:: python
 
-        notificator = SlackNotificator(url="webhook_url")
-        notificator.send_notification("The script is finish")
+        notif = SlackNotificator(url="webhook_url")
+        notif.send_notification("The script is finish")
 
     """
 
@@ -84,9 +84,9 @@ class EmailNotificator:
                 destination_email = sender_email
                 smtp_server = smtplib.SMTP('smtp.gmail.com',587)
 
-                notificator = EmailNotificator(sender_email, sender_login_credential,
+                notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
-                notificator.send_notification(subject="subject", text="text")
+                notif.send_notification(subject="subject", text="text")
 
         Using hotmail server::
 
@@ -95,9 +95,9 @@ class EmailNotificator:
                 destination_email = "other_email"
                 smtp_server = smtplib.SMTP('smtp.live.com',587)
 
-                notificator = EmailNotificator(sender_email, sender_login_credential,
+                notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
-                notificator.send_notification(subject="subject", text="text")
+                notif.send_notification(subject="subject", text="text")
 
     """
 
@@ -131,7 +131,7 @@ class EmailNotificator:
 class ChannelNotificator:
     # pylint: disable=line-too-long
     """
-    Wrapper notificator around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
+    Wrapper notif around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
     the channel.
 
     Args:
@@ -146,8 +146,8 @@ class ChannelNotificator:
 
         .. code-block:: python
 
-            notificator = Notify(endpoint="https://notify.run/some_channel_id")
-            notificator.send_notification('Hi there!')
+            notif = Notify(endpoint="https://notify.run/some_channel_id")
+            notif.send_notification('Hi there!')
 
     """
 
@@ -170,7 +170,7 @@ class ChannelNotificator:
 class FacebookMessengerNotificator:
     # pylint: disable=line-too-long
     """
-    Wrapper notificator around fbchat to send a notification threw Facebook messenger to yourself.
+    Wrapper notif around fbchat to send a notification threw Facebook messenger to yourself.
 
     Args:
 
@@ -185,8 +185,8 @@ class FacebookMessengerNotificator:
 
         .. code-block:: python
 
-            notificator = Client('email', 'password')
-            notificator.send_notification(text="test")
+            notif = Client('email', 'password')
+            notif.send_notification(text="test")
 
     """
 
