@@ -152,10 +152,8 @@ texinfo_documents = [
 # -- Intersphinx mappings ----------------------------------------------------
 
 intersphinx_mapping = {
-    'PyTorch': ('https://pytorch.org/docs/master/', None),
     'python': ('https://docs.python.org/3', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-    'matplotlib': ('https://matplotlib.org/', None)
 }
 
 # -- Extension configuration -------------------------------------------------
