@@ -17,7 +17,9 @@ Notif is a easy to use package to send notification from a python script.
 
 Use this package to send during or at the end of a python script a
     - Slack notification
-    - email notification.
+    - email notification
+    - Channel notification
+    - Facebook messenger notification.
 
 .. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best pratices
 

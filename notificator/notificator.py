@@ -4,7 +4,13 @@ from email.policy import SMTP
 import requests
 
 try:
+    from fbchat import Client, Message, ThreadType
+except ImportError:
+    Client = None
+    Message = None
+    ThreadType = None
 
+try:
     from notify_run import Notify as ChannelNotify
 except ImportError:
     ChannelNotify = None
@@ -140,8 +146,8 @@ class ChannelNotificator:
 
         .. code-block:: python
 
-            notify = Notify(endpoint="https://notify.run/some_channel_id")
-            notify.send('Hi there!')
+            notificator = Notify(endpoint="https://notify.run/some_channel_id")
+            notificator.send_notification('Hi there!')
 
     """
 
@@ -160,6 +166,44 @@ class ChannelNotificator:
         """
         self.notifier.send(message)
 
-# class MessengerNotificator:
-#
-#
+
+class FacebookMessengerNotificator:
+    # pylint: disable=line-too-long
+    """
+    Wrapper notificator around fbchat to send a notification threw Facebook messenger to yourself.
+
+    Args:
+
+        email_logging (str): Your email to login into Facebook.
+        logging_credential (str): Your login credential to login into Facebook.
+
+    Attributes:
+
+        fb_client (Client): A fbchat client
+
+    Example:
+
+        .. code-block:: python
+
+            notificator = Client('email', 'password')
+            notificator.send_notification(text="test")
+
+    """
+
+    def __init__(self, email_logging, logging_credential):
+        if Client is None:
+            raise ImportError("fbchat need to be installed to use this class.")
+        self.fb_client = Client(email_logging, logging_credential)
+
+    def send_notification(self, message: str) -> None:
+        """
+        Send a notification message to your Facebook messenger.
+
+        Args:
+            message (str): The message to send as a notification message to your Facebook messenger.
+
+        """
+        self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
+
+    def __del__(self):
+        self.fb_client.logout()

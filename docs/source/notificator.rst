@@ -22,3 +22,7 @@ Channel Notificator
 ----------------------
 
 .. autoclass:: ChannelNotificator
+
+Facebook Messenger Notificator
+---------------------------------
+.. autoclass:: FacebookMessengerNotificator
