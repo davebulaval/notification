@@ -23,7 +23,7 @@ class SlackNotificator:
 
     Args:
 
-        webhook_url (str): a webhook url given by Slack to post content into a channel. See `here <https://api.slack.com/incoming-webhooks/>`_ for more detail.
+        webhook_url (str): a webhook url given by Slack to post content into a channel. See `here <https://api.slack.com/incoming-webhooks>`_ for more detail.
 
     Attributes:
 
