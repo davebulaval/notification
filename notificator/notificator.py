@@ -2,7 +2,12 @@ import json
 from email.policy import SMTP
 
 import requests
-from notify_run import Notify
+
+try:
+
+    from notify_run import Notify as Notify
+except ImportError:
+    Notify = None
 
 
 class SlackNotificator:
@@ -17,7 +22,7 @@ class SlackNotificator:
         webhook_url (str): The webhook url to push notification to.
         headers (dict): The headers of the notification.
 
-    Exemple:
+    Example:
 
     .. code-block:: python
 
@@ -60,7 +65,7 @@ class EmailNotificator:
         destination_email (str): The email of the recipient of the notification.
         smtp_server (SMTP): The smtp server.
 
-    Exemple:
+    Example:
 
         Using gmail server::
 
@@ -124,7 +129,7 @@ class ChannelNotificator:
     Attributes:
         notifier (Notify): A notify object to send notification.
 
-    Exemple:
+    Example:
 
         notify = Notify(endpoint="https://notify.run/some_channel_id")
         notify.send('Hi there!')
@@ -132,11 +137,13 @@ class ChannelNotificator:
     """
 
     def __init__(self, channel_url: str):
+        if Notify is None:
+            raise ImportError("notify_run need to be installed to use this class.")
         self.notifier = Notify(endpoint=channel_url)
 
     def send_notification(self, message: str) -> None:
         """
-        Send a notificiation message to the channel.
+        Send a notification message to the channel.
 
         Args:
             message (str): The message to send as a notification message to the channel.
