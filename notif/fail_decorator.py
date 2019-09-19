@@ -1,3 +1,4 @@
+# pylint: disable=W0702
 import sys
 import traceback
 
@@ -42,7 +43,7 @@ def notification_on_fail(notificator, verbose_level=3):
             try:
                 return func(*args, **kwargs)
             except:
-                exception_type, value, tb_msg = sys.exc_info()
+                exception_type, value, _ = sys.exc_info()
                 verbose = str(verbose_level)
                 if verbose == '1':
                     message = f"An error occurred of type {exception_type} when running the script."
