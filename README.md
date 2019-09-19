@@ -4,7 +4,7 @@
 
 Notif is a easy to use package to send notification from a python script.
 
-Use this package to send during or at the end of a python script a
+Use this package to send during, at the end or when failing of a python script a
 
     - Slack notification
     - email notification
