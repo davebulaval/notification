@@ -5,9 +5,9 @@ import requests
 
 try:
 
-    from notify_run import Notify as Notify
+    from notify_run import Notify as ChannelNotify
 except ImportError:
-    Notify = None
+    ChannelNotify = None
 
 
 class SlackNotificator:
@@ -16,9 +16,11 @@ class SlackNotificator:
     Notificator to send a notification into a Slack channel.
 
     Args:
+
         webhook_url (str): a webhook url given by Slack to post content into a channel. See `here <https://api.slack.com/incoming-webhooks/>`_ for more detail.
 
     Attributes:
+
         webhook_url (str): The webhook url to push notification to.
         headers (dict): The headers of the notification.
 
@@ -54,12 +56,14 @@ class EmailNotificator:
     Notificator to send a notification email.
 
     Args:
+
         sender_email (str): The email of the sender.
         sender_login_credential (str): The login credential of the sender email.
         destination_email (str): The recipient of  the email, can be the same as the sender_email.
         smtp_server (SMTP): The smtp server to relay the email.
 
     Attributes:
+
         sender_email (str): The email of the sender.
         sender_login_credential (str): The login credential of the sender.
         destination_email (str): The email of the recipient of the notification.
@@ -102,6 +106,7 @@ class EmailNotificator:
         Send a notificiation message to the destination email.
 
         Args:
+
             subject (str): The subject to been show in the email.
             text (str): The text of the email.
 
@@ -124,22 +129,26 @@ class ChannelNotificator:
     the channel.
 
     Args:
+
         channel_url (str): A channel_rul created on `notify.run <https://notify.run/>`
 
     Attributes:
+
         notifier (Notify): A notify object to send notification.
 
     Example:
 
-        notify = Notify(endpoint="https://notify.run/some_channel_id")
-        notify.send('Hi there!')
+        .. code-block:: python
+
+            notify = Notify(endpoint="https://notify.run/some_channel_id")
+            notify.send('Hi there!')
 
     """
 
     def __init__(self, channel_url: str):
-        if Notify is None:
+        if ChannelNotify is None:
             raise ImportError("notify_run need to be installed to use this class.")
-        self.notifier = Notify(endpoint=channel_url)
+        self.notifier = ChannelNotify(endpoint=channel_url)
 
     def send_notification(self, message: str) -> None:
         """
@@ -150,3 +159,7 @@ class ChannelNotificator:
 
         """
         self.notifier.send(message)
+
+# class MessengerNotificator:
+#
+#
