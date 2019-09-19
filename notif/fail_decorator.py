@@ -46,9 +46,9 @@ def notification_on_fail(notificator, verbose_level=3):
                 exception_type, value, _ = sys.exc_info()
                 verbose = str(verbose_level)
                 if verbose == '1':
-                    message = f"An error occurred of type {exception_type} when running the script."
+                    message = "An error occurred of type {} when running the script.".format(exception_type)
                 elif verbose == '2':
-                    message = f"An error occurred when running the script. The error message is: {value}"
+                    message = "An error occurred when running the script. The error message is: {}".format(value)
                 else:
                     message = traceback.format_exc()
                 notificator.send_notification(message=message)
