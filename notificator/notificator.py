@@ -2,6 +2,7 @@ import json
 from email.policy import SMTP
 
 import requests
+from notify_run import Notify
 
 
 class SlackNotificator:
@@ -109,3 +110,36 @@ class EmailNotificator:
         self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
 
         self.smtp_server.close()
+
+
+class ChannelNotificator:
+    # pylint: disable=line-too-long
+    """
+    Wrapper notificator around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
+    the channel.
+
+    Args:
+        channel_url (str): A channel_rul created on `notify.run <https://notify.run/>`
+
+    Attributes:
+        notifier (Notify): A notify object to send notification.
+
+    Exemple:
+
+        notify = Notify(endpoint="https://notify.run/some_channel_id")
+        notify.send('Hi there!')
+
+    """
+
+    def __init__(self, channel_url: str):
+        self.notifier = Notify(endpoint=channel_url)
+
+    def send_notification(self, message: str) -> None:
+        """
+        Send a notificiation message to the channel.
+
+        Args:
+            message (str): The message to send as a notification message to the channel.
+
+        """
+        self.notifier.send(message)

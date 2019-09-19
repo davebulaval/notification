@@ -17,3 +17,8 @@ Email Notificator
 --------------------
 
 .. autoclass:: EmailNotificator
+
+Channel Notificator
+----------------------
+
+.. autoclass:: ChannelNotificator
