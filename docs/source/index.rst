@@ -38,3 +38,4 @@ API Reference
    :caption: Package Reference
 
    notificator
+   decorator

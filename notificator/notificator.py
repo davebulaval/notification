@@ -190,7 +190,7 @@ class FacebookMessengerNotificator:
 
     """
 
-    def __init__(self, email_logging, logging_credential):
+    def __init__(self, email_logging: str, logging_credential: str):
         if Client is None:
             raise ImportError("fbchat need to be installed to use this class.")
         self.fb_client = Client(email_logging, logging_credential)
