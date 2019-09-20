@@ -1,4 +1,5 @@
 import json
+from abc import ABC, abstractmethod
 from email.policy import SMTP
 
 import requests
@@ -16,7 +17,52 @@ except ImportError:
     ChannelNotify = None
 
 
-class SlackNotificator:
+class Notification(ABC):
+    # pylint: disable=line-too-long
+    """
+    Abstract class to define a notification. Force implementation of method send_notification and define how to send a notification error'
+    """
+
+    @abstractmethod
+    def send_notification(self, message: str) -> None:
+        """
+        Abstract method to send a notification.
+
+        Args:
+            message (str): The message to send as a notification message threw the notificator.
+        """
+        pass
+
+    def send_notification_error(self, error: Exception) -> None:
+        """
+        Send a notification error message threw to notificator.
+
+        Args:
+            error (Exception): The exception raised during the script execution.
+        """
+        notification_error_message = self._parse_error(error)
+        self.send_notification(message=notification_error_message)
+
+    def _parse_error(self, error: Exception) -> str:
+        """
+        Internal method to format the error into a readable text.
+
+        Args:
+            error (Exception): The exception raised during the script execution.
+
+        Returns:
+            A formatted string base on the error message and error type.
+        """
+        error_type = type(error)
+        error_message = error.args[0]
+
+        formatted_error_message = "An error of type {} occurred. An the error message is {}".format(error_type,
+                                                                                                    error_message)
+
+        return formatted_error_message
+
+
+class SlackNotificator(Notification):
     # pylint: disable=line-too-long
     """
     Notificator to send a notification into a Slack channel.
@@ -56,7 +102,7 @@ class SlackNotificator:
         requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
 
 
-class EmailNotificator:
+class EmailNotificator(Notification):
     # pylint: disable=line-too-long
     """
     Notificator to send a notification email.
@@ -128,7 +174,7 @@ class EmailNotificator:
         self.smtp_server.close()
 
 
-class ChannelNotificator:
+class ChannelNotificator(Notification):
     # pylint: disable=line-too-long
     """
     Wrapper notif around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
@@ -167,7 +213,7 @@ class ChannelNotificator:
         self.notifier.send(message)
 
 
-class FacebookMessengerNotificator:
+class FacebookMessengerNotificator(Notification):
     # pylint: disable=line-too-long
     """
     Wrapper notif around fbchat to send a notification threw Facebook messenger to yourself.
