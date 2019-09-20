@@ -26,14 +26,5 @@ pip install notif
 
 
 --------------
-The package work well with the [Sacred](https://pypi.org/project/sacred/) decorator, but you need to defined them before Sacred decorator.
+Unfortunately the `fail_decorator` is not working with the package (for now) with the [Sacred](https://pypi.org/project/sacred/) package.
 
-
-```python
-
-@notification_on_fail(notificator=notificator)
-@ex_observer.automain
-def main(...)
-    pass
-
-```
