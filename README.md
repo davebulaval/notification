@@ -20,8 +20,16 @@ Read the documentation at [notificationdoc.ca](https://notificationdoc.ca).
 
 ## Installation
 
+- **Install the stable version of notif:**
+
 ```shell script
 pip install notif
+```
+
+- **Install the latest version of notif:**
+
+```shell script
+pip install -U git+https://github.com/davebulaval/notification.git
 ```
 
 
