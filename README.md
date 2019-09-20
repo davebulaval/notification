@@ -14,7 +14,7 @@ Use this package to send during, at the end or when failing of a python script a
 > Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the [following](https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories) for best pratices
 
     
-Read the documentation at [Notificationdoc.ca](https://notificationdoc.ca).
+Read the documentation at [notificationdoc.ca](https://notificationdoc.ca).
 
 ---------
 
