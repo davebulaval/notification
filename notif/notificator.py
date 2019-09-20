@@ -107,14 +107,13 @@ class EmailNotificator:
         self.destination_email = destination_email
         self.smtp_server = smtp_server
 
-    def send_notification(self, subject, text):
+    def send_notification(self, message):
         """
         Send a notificiation message to the destination email.
 
         Args:
 
-            subject (str): The subject to been show in the email.
-            text (str): The text of the email.
+            message (str): The message of the email.
 
         """
         self.smtp_server.ehlo()
@@ -122,7 +121,8 @@ class EmailNotificator:
 
         self.smtp_server.login(self.sender_email, self.sender_login_credential)
 
-        content = 'Subject: %s\n\n%s' % (subject, text)
+        subject = "Python script notification email"
+        content = 'Subject: %s\n\n%s' % (subject, message)
         self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
 
         self.smtp_server.close()
