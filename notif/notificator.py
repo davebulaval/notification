@@ -56,8 +56,8 @@ class Notification(ABC):
         error_type = type(error)
         error_message = error.args[0]
 
-        formatted_error_message = "An error of type {} occurred. An the error message is {}".format(error_type,
-                                                                                                    error_message)
+        formatted_error_message = "An error of type {} occurred. An the error message is {}".format(
+            error_type, error_message)
 
         return formatted_error_message
 
