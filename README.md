@@ -7,7 +7,7 @@ Notif is a easy to use package to send notification from a python script.
 Use this package to send during, at the end or when failing of a python script a
 
     - Slack notification
-    - email notification
+    - Email notification
     - Channel notification
     - Facebook messenger notification.
     
@@ -24,3 +24,16 @@ Read the documentation at [Notificationdoc.ca](https://notificationdoc.ca).
 pip install notif
 ```
 
+
+--------------
+The package work well with the [Sacred](https://pypi.org/project/sacred/) decorator, but you need to defined them before Sacred decorator.
+
+
+```python
+
+@notification_on_fail(notificator=notificator)
+@ex_observer.automain
+def main(...)
+    pass
+
+```
