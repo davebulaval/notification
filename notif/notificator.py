@@ -2,7 +2,10 @@ import json
 from abc import ABC, abstractmethod
 from email.policy import SMTP
 
-import requests
+try:
+    import requests
+except ImportError:
+    requests = None
 
 try:
     from fbchat import Client, Message, ThreadType
@@ -86,6 +89,8 @@ class SlackNotificator(Notification):
     """
 
     def __init__(self, webhook_url: str):
+        if requests is None:
+            raise ImportError("requests need to be installed to use this class.")
         self.webhook_url = webhook_url
         self.headers = {'content-type': 'application/json'}
 
