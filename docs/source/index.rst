@@ -47,7 +47,7 @@ Install the latest version of notif:
 Notificator & Sacred
 ====================
 
-Unfortunately the `fail_decorator` is not working with the package (yet) with the [Sacred](https://pypi.org/project/sacred/) package.
+Unfortunately the `fail_decorator` is not working with the package (yet) with the `Sacred <https://pypi.org/project/sacred/>`_ package.
 
 
 API Reference
