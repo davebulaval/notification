@@ -17,5 +17,5 @@ Fail Decorator
 Notificator & Sacred
 ====================
 
-Unfortunately the `fail_decorator` is not working with the package (yet) with the `Sacred <https://pypi.org/project/sacred/>`_ package.
+Unfortunately the `Fail decorator` is not working with the package (yet) with the `Sacred <https://pypi.org/project/sacred/>`_ package.
 
