@@ -21,19 +21,10 @@ def notification_on_fail(notificator, verbose_level=3):
 
         .. code-block:: python
 
-            notif = Client('email', 'password')
+            notif = SlackNotificator(url="webhook_url")
 
             @notification_on_fail(notif=notif, verbose_level='2')
             def fail_test():
-                print(t)
-
-
-        .. code-block:: python
-
-            notif = Client('email', 'password')
-
-            @notification_on_fail(notif=notif, verbose_level='2')
-            def main():
                 print(t)
 
     """
