@@ -6,40 +6,43 @@
 :github_url: https://github.com/davebulaval/notification
 
 .. meta::
-   :description: Notif is a package to send notification from a python script.
+   :description: Notif is a easy to use package to send notification from a python script.
    :keywords: notification, python
    :author: David Beauchemin
 
-Notif - The notification package
+Notif - The notification package for every python project
 =====================================
 
 Notif is a easy to use package to send notification from a python script.
 
-Use this package to send during or at the end of a python script a
+Use this package to send during, at the end or when failing of a python script a
+
     - Slack notification
     - Email notification
     - Channel notification
     - Facebook messenger notification.
 
-.. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best pratices
+.. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best pratices.
 
 Installation
 ============
 
+- **Install the stable version of notif:**
 .. code-block:: sh
 
    pip install notif
 
+
+- **Install the latest version of notif:**
+
+.. code-block:: sh
+
+    pip install -U git+https://github.com/davebulaval/notification.git
+
+
 Notif with Sacred
 ==================
-The package work well with the `Sacred <https://pypi.org/project/sacred/>`_ decorator, but you need to defined them before Sacred decorator.
-
-.. code-block:: python
-
-    @notification_on_fail(notificator=notificator)
-    @ex_observer.automain
-    def main(...)
-        pass
+Unfortunately the `fail_decorator` is not working with the package (yet) with the [Sacred](https://pypi.org/project/sacred/) package.
 
 
 API Reference
