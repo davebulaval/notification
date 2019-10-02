@@ -31,8 +31,3 @@ pip install notif
 ```shell script
 pip install -U git+https://github.com/davebulaval/notification.git
 ```
-
-
---------------
-Unfortunately the `fail_decorator` is not working with the package (_yet_) with the [Sacred](https://pypi.org/project/sacred/) package.
-
