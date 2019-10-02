@@ -13,9 +13,8 @@ Fail Decorator
 
 .. autofunction:: notification_on_fail
 
-
 Notificator & Sacred
 ====================
 
-Unfortunately the `Fail decorator` is not working with the package (yet) with the `Sacred <https://pypi.org/project/sacred/>`_ package.
+Unfortunately the `fail decorator` is not working with the package (yet) with the `Sacred <https://pypi.org/project/sacred/>`_ package.
 
