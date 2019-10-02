@@ -11,7 +11,7 @@
    :author: David Beauchemin
 
 Notif - The notification package for every python project
-=====================================
+=========================================================
 
 Notif is a easy to use package to send notification from a python script.
 
