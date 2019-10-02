@@ -44,12 +44,6 @@ Install the latest version of notif:
     pip install -U git+https://github.com/davebulaval/notification.git
 
 
-Notificator & Sacred
-====================
-
-Unfortunately the `fail_decorator` is not working with the package (yet) with the `Sacred <https://pypi.org/project/sacred/>`_ package.
-
-
 API Reference
 -------------
 
