@@ -90,13 +90,13 @@ class SlackNotificator(Notification):
 
     def __init__(self, webhook_url: str):
         if requests is None:
-            raise ImportError("requests need to be installed to use this class.")
+            raise ImportError("package requests need to be installed to use this class.")
         self.webhook_url = webhook_url
         self.headers = {'content-type': 'application/json'}
 
     def send_notification(self, message: str) -> None:
         """
-        Send a notificiation message to the webhook url.
+        Send a notification message to the webhook url.
 
         Args:
             message (str): The message to send as a notification message to the webhook url.
@@ -160,7 +160,7 @@ class EmailNotificator(Notification):
 
     def send_notification(self, message):
         """
-        Send a notificiation message to the destination email.
+        Send a notification message to the destination email.
 
         Args:
 
@@ -182,7 +182,7 @@ class EmailNotificator(Notification):
 class ChannelNotificator(Notification):
     # pylint: disable=line-too-long
     """
-    Wrapper notif around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
+    Wrapper around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
     the channel.
 
     Args:
@@ -197,14 +197,14 @@ class ChannelNotificator(Notification):
 
         .. code-block:: python
 
-            notif = Notify(endpoint="https://notify.run/some_channel_id")
+            notif = ChannelNotificator(endpoint="https://notify.run/some_channel_id")
             notif.send_notification('Hi there!')
 
     """
 
     def __init__(self, channel_url: str):
         if ChannelNotify is None:
-            raise ImportError("notify_run need to be installed to use this class.")
+            raise ImportError("package notify_run need to be installed to use this class.")
         self.notifier = ChannelNotify(endpoint=channel_url)
 
     def send_notification(self, message: str) -> None:
@@ -221,7 +221,7 @@ class ChannelNotificator(Notification):
 class FacebookMessengerNotificator(Notification):
     # pylint: disable=line-too-long
     """
-    Wrapper notif around fbchat to send a notification threw Facebook messenger to yourself.
+    Wrapper around fbchat to send a notification threw Facebook messenger to yourself.
 
     Args:
 
@@ -236,14 +236,14 @@ class FacebookMessengerNotificator(Notification):
 
         .. code-block:: python
 
-            notif = Client('email', 'password')
+            notif = FacebookMessengerNotificator('email', 'password')
             notif.send_notification(text="test")
 
     """
 
     def __init__(self, email_logging: str, logging_credential: str):
         if Client is None:
-            raise ImportError("fbchat need to be installed to use this class.")
+            raise ImportError("package fbchat need to be installed to use this class.")
         self.fb_client = Client(email_logging, logging_credential)
 
     def send_notification(self, message: str) -> None:

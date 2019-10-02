@@ -22,31 +22,36 @@ Use this package to send during, at the end or when failing of a python script a
     - Channel notification
     - Facebook messenger notification.
 
+
 .. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best pratices.
 
 Installation
 ============
 
-- **Install the stable version of notif:**
+Install the stable version of notif:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. code-block:: sh
 
    pip install notif
 
 
-- **Install the latest version of notif:**
+Install the latest version of notif:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: sh
 
     pip install -U git+https://github.com/davebulaval/notification.git
 
 
-Notif with Sacred
-==================
+Notificator & Sacred
+====================
+
 Unfortunately the `fail_decorator` is not working with the package (yet) with the [Sacred](https://pypi.org/project/sacred/) package.
 
 
 API Reference
-=============
+-------------
 
 .. toctree::
    :maxdepth: 1
@@ -54,3 +59,4 @@ API Reference
 
    notificator
    decorator
+
