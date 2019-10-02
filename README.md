@@ -11,7 +11,7 @@ Use this package to send during, at the end or when failing of a python script a
     - Channel notification
     - Facebook messenger notification.
     
-> Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the [following](https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories) for best pratices
+> Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the [following](https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories) for best pratices.
 
     
 Read the documentation at [notificationdoc.ca](https://notificationdoc.ca).
@@ -34,5 +34,5 @@ pip install -U git+https://github.com/davebulaval/notification.git
 
 
 --------------
-Unfortunately the `fail_decorator` is not working with the package (for now) with the [Sacred](https://pypi.org/project/sacred/) package.
+Unfortunately the `fail_decorator` is not working with the package (_yet_) with the [Sacred](https://pypi.org/project/sacred/) package.
 
