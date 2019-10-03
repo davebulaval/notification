@@ -7,6 +7,7 @@ def notification_on_fail(notificator, verbose_level=3):
     # pylint: disable=line-too-long
     """
     Decorator to wrap a function to track if the script fail and push notification to a previously set notif.
+    Mostly inspire from the `Fabric 1.1 wrapper <https://github.com/fabric/fabric/tree/1.10>`_
 
     Args:
 
