@@ -23,7 +23,7 @@ except ImportError:
 class Notification(ABC):
     # pylint: disable=line-too-long
     """
-    Abstract class to define a notification. Force implementation of method send_notification and define how to send a notification error'
+    Abstract class to define a notification. Force implementation of method `send_notification` and define how to send a notification error'
     """
 
     @abstractmethod
