@@ -32,13 +32,13 @@ class Notification(ABC):
         Abstract method to send a notification.
 
         Args:
-            message (str): The message to send as a notification message threw the notificator.
+            message (str): The message to send as a notification message through the notificator.
         """
         pass
 
     def send_notification_error(self, error: Exception) -> None:
         """
-        Send a notification error message threw to notificator.
+        Send a notification error message through the notificator.
 
         Args:
             error (Exception): The exception raised during the script execution.
