@@ -16,7 +16,7 @@ def notification_on_fail(notificator, verbose_level=3):
         of verbosity.
 
     Returns:
-        A wrapped function which will now catch if an error occur and throw a notification threw the notif.
+        A wrapped function which will catch if an error occur and send a notification through the notificator.
 
     Example:
 

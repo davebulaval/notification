@@ -33,13 +33,14 @@ class Notification(ABC):
         Abstract method to send a notification.
 
         Args:
-            message (str): The message to send as a notification message threw the notificator.
+            message (str): The message to send as a notification message through the notificator.
         """
         pass
 
     def send_notification_error(self, error: Exception) -> None:
         """
-        Send a notification error message thru the notificator.
+        Send a notification error message through the notificator.
+
 
         Args:
             error (Exception): The exception raised during the script execution.
@@ -86,7 +87,7 @@ class SlackNotificator(Notification):
 
     .. code-block:: python
 
-        notif = SlackNotificator(url="webhook_url")
+        notif = SlackNotificator(webhook_url="webhook_url")
         notif.send_notification("The script is finish")
 
     """
@@ -142,7 +143,7 @@ class EmailNotificator(Notification):
 
                 notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
-                notif.send_notification(subject="subject", text="text")
+                notif.send_notification(message="text")
 
         Using hotmail server::
 
@@ -153,7 +154,7 @@ class EmailNotificator(Notification):
 
                 notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
-                notif.send_notification(subject="subject", text="text")
+                notif.send_notification(message="text")
 
     """
 
@@ -242,7 +243,7 @@ class FacebookMessengerNotificator(Notification):
         .. code-block:: python
 
             notif = FacebookMessengerNotificator('email', 'password')
-            notif.send_notification(text="test")
+            notif.send_notification(message="test")
 
     """
 
