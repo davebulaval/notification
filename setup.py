@@ -15,7 +15,7 @@ with open(version_file_path, 'rb') as f:
 
 packages = find_packages()
 setup(
-    name='Notif - The notification package for every python project',
+    name='notif',
     version=version,
     author='David Beauchemin',
     author_email='david.beauchemin.5@ulaval.ca',
@@ -35,7 +35,7 @@ setup(
     ],
     packages=packages,
     python_requires='>=3',
-    description='A package to send notification from a python script.',
+    description='The notification package for every python project',
     long_description=readme,
     long_description_content_type='text/markdown',
 )
