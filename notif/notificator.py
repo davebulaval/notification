@@ -130,8 +130,9 @@ class SlackNotificator(Notification):
         try:
             requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
         except requests.exceptions.HTTPError:
-            warnings.warn(f"Error when trying to send notification. Will retry in {self.on_error_sleep_time} seconds.",
-                          Warning)
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
             sleep(self.on_error_sleep_time)
             try:
                 requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
@@ -219,8 +220,9 @@ class EmailNotificator(Notification):
         try:
             self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
         except SMTPRecipientsRefused:
-            warnings.warn(f"Error when trying to send notification. Will retry in {self.on_error_sleep_time} seconds.",
-                          Warning)
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
             sleep(self.on_error_sleep_time)
             try:
                 self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
@@ -277,8 +279,9 @@ class ChannelNotificator(Notification):
         try:
             self.notifier.send(message)
         except requests.exceptions.HTTPError:
-            warnings.warn(f"Error when trying to send notification. Will retry in {self.on_error_sleep_time} seconds.",
-                          Warning)
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
             sleep(self.on_error_sleep_time)
             try:
                 self.notifier.send(message)
@@ -327,8 +330,9 @@ class FacebookMessengerNotificator(Notification):
         try:
             self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
         except FBchatException:
-            warnings.warn(f"Error when trying to send notification. Will retry in {self.on_error_sleep_time} seconds.",
-                          Warning)
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
             sleep(self.on_error_sleep_time)
             try:
                 self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
@@ -383,8 +387,9 @@ class TeamsNotificator(Notification):
         try:
             self.teams_hook.send()
         except pymsteams.TeamsWebhookException:
-            warnings.warn(f"Error when trying to send notification. Will retry in {self.on_error_sleep_time} seconds.",
-                          Warning)
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
             sleep(self.on_error_sleep_time)
             try:
                 self.teams_hook.text(message)
