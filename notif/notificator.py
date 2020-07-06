@@ -23,7 +23,8 @@ except ImportError:
 class Notification(ABC):
     # pylint: disable=line-too-long
     """
-    Abstract class to define a notification. Force implementation of method `send_notification` and define how to send a notification error'
+    Abstract class to define a notification. Force implementation of method `send_notification` and specify how to send
+    a notification error.
     """
 
     @abstractmethod
@@ -38,7 +39,7 @@ class Notification(ABC):
 
     def send_notification_error(self, error: Exception) -> None:
         """
-        Send a notification error message threw to notificator.
+        Send a notification error message thru the notificator.
 
         Args:
             error (Exception): The exception raised during the script execution.
@@ -46,23 +47,24 @@ class Notification(ABC):
         notification_error_message = self._parse_error(error)
         self.send_notification(message=notification_error_message)
 
-    def _parse_error(self, error: Exception) -> str:
-        """
-        Internal method to format the error into a readable text.
 
-        Args:
-            error (Exception): The exception raised during the script execution.
+def _parse_error(error: Exception) -> str:
+    """
+    Format the error into a readable text.
 
-        Returns:
-            A formatted string base on the error message and error type.
-        """
-        error_type = type(error)
-        error_message = error.args[0]
+    Args:
+        error (Exception): The exception raised during the script execution.
 
-        formatted_error_message = "An error of type {} occurred. An the error message is {}".format(
-            error_type, error_message)
+    Returns:
+        A formatted string base on the error message and error type.
+    """
+    error_type = type(error)
+    error_message = error.args[0]
 
-        return formatted_error_message
+    formatted_error_message = "An error of type {} occurred. An the error message is {}".format(
+        error_type, error_message)
+
+    return formatted_error_message
 
 
 class SlackNotificator(Notification):
@@ -72,7 +74,8 @@ class SlackNotificator(Notification):
 
     Args:
 
-        webhook_url (str): a webhook url given by Slack to post content into a channel. See `here <https://api.slack.com/incoming-webhooks>`_ for more detail.
+        webhook_url (str): a webhook url given by Slack to post content into a channel. See
+        `here <https://api.slack.com/incoming-webhooks>`_ for more detail.
 
     Attributes:
 
@@ -103,8 +106,10 @@ class SlackNotificator(Notification):
 
         """
         payload_message = {"text": message}
-
-        requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
+        try:
+            requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
+        except requests.exceptions.HTTPError:
+            pass
 
 
 class EmailNotificator(Notification):
@@ -116,7 +121,7 @@ class EmailNotificator(Notification):
 
         sender_email (str): The email of the sender.
         sender_login_credential (str): The login credential of the sender email.
-        destination_email (str): The recipient of  the email, can be the same as the sender_email.
+        destination_email (str): The recipient of the email can be the same as the sender_email.
         smtp_server (SMTP): The smtp server to relay the email.
 
     Attributes:
