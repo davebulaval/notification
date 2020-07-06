@@ -348,13 +348,13 @@ class TeamsNotificator(Notification):
 
     Args:
 
-        webhook_url (str): a webhook url given by Microsoft Teams to post content into a channel. See
-        `here <https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using>`_ for more detail.
+        webhook_url (str): A webhook url given by Microsoft Teams to post content into a channel. See
+            `here <https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using>`_
+            for more detail.
 
     Attributes:
 
         teams_hook (str): The webhook url to push notification to.
-        # headers (dict): The headers of the notification.
 
     Example:
 

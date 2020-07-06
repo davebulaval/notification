@@ -31,3 +31,7 @@ Channel Notificator
 Facebook Messenger Notificator
 ---------------------------------
 .. autoclass:: FacebookMessengerNotificator
+
+Microsoft Teams Notificator
+---------------------------------
+.. autoclass:: TeamsNotificator

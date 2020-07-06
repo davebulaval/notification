@@ -20,7 +20,8 @@ Use this package to send during, at the end or when failing of a python script a
     - Slack notification
     - Email notification
     - Channel notification
-    - Facebook messenger notification.
+    - Facebook messenger notification
+    - Microsoft Teams notification.
 
 
 .. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best practices.
