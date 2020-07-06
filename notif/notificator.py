@@ -136,8 +136,7 @@ class SlackNotificator(Notification):
             try:
                 requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
             except requests.exceptions.HTTPError:
-                warnings.warn(
-                    "Second error when trying to send notification, will abort.", Warning)
+                warnings.warn("Second error when trying to send notification, will abort.", Warning)
                 pass
 
 
@@ -188,6 +187,7 @@ class EmailNotificator(Notification):
 
     def __init__(self, sender_email: str, sender_login_credential: str, destination_email: str, smtp_server: SMTP,
                  on_error_sleep_time: int):
+        # pylint: disable=too-many-arguments
         super().__init__(on_error_sleep_time)
         self.sender_email = sender_email
         self.sender_login_credential = sender_login_credential
@@ -225,8 +225,7 @@ class EmailNotificator(Notification):
             try:
                 self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
             except SMTPRecipientsRefused:
-                warnings.warn(
-                    "Second error when trying to send notification, will abort.", Warning)
+                warnings.warn("Second error when trying to send notification, will abort.", Warning)
                 pass
         finally:
             self.smtp_server.close()
@@ -284,8 +283,7 @@ class ChannelNotificator(Notification):
             try:
                 self.notifier.send(message)
             except requests.exceptions.HTTPError:
-                warnings.warn(
-                    "Second error when trying to send notification, will abort.", Warning)
+                warnings.warn("Second error when trying to send notification, will abort.", Warning)
                 pass
 
 
@@ -335,8 +333,7 @@ class FacebookMessengerNotificator(Notification):
             try:
                 self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
             except FBchatException:
-                warnings.warn(
-                    "Second error when trying to send notification, will abort.", Warning)
+                warnings.warn("Second error when trying to send notification, will abort.", Warning)
                 pass
 
     def __del__(self):
@@ -392,6 +389,5 @@ class TeamsNotificator(Notification):
             try:
                 self.teams_hook.text(message)
             except FBchatException:
-                warnings.warn(
-                    "Second error when trying to send notification, will abort.", Warning)
+                warnings.warn("Second error when trying to send notification, will abort.", Warning)
                 pass
