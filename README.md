@@ -32,3 +32,14 @@ pip install notif
 ```shell script
 pip install -U git+https://github.com/davebulaval/notification.git
 ```
+
+### Cite
+Use the following for the article;
+```
+@misc{notif,
+    title={{Notif - The notification package}},
+    author={David Beauchemin},
+    year={2019},
+    note   = {\url{https://notificationdoc.ca/}}
+}
+```
