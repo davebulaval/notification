@@ -1,7 +1,7 @@
 import json
+import smtplib
 import warnings
 from abc import ABC, abstractmethod
-from email.policy import SMTP
 from smtplib import SMTPRecipientsRefused
 from time import sleep
 
@@ -132,8 +132,7 @@ class SlackNotificator(Notification):
             try:
                 requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
             except requests.exceptions.HTTPError:
-                warnings.warn("Second error when trying to send notification, will abort.", Warning)
-                pass
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
 
 class EmailNotificator(Notification):
@@ -146,13 +145,15 @@ class EmailNotificator(Notification):
         sender_email (str): The email of the sender.
         sender_login_credential (str): The login credential of the sender email.
         destination_email (str): The recipient of the email can be the same as the sender_email.
-        smtp_server (SMTP): The smtp server to relay the email.
+        smtp_server (smtplib.SMTP): The smtp server to relay the email.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
 
-    Example:
+    Examples:
 
         Using gmail server::
+
+            .. code-block:: python
 
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
@@ -163,12 +164,15 @@ class EmailNotificator(Notification):
                                                destination_email, smtp_server)
                 notif.send_notification(message="text")
 
+
         Using hotmail server::
+
+        .. code-block:: python
 
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
                 destination_email = "other_email"
-                smtp_server = smtplib.SMTP('smtp.live.com',587)
+                smtp_server = smtplib.SMTP('smtp.live.com', 587)
 
                 notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
@@ -179,16 +183,17 @@ class EmailNotificator(Notification):
                  sender_email: str,
                  sender_login_credential: str,
                  destination_email: str,
-                 smtp_server: SMTP,
+                 smtp_server: smtplib.SMTP,
                  on_error_sleep_time: int = 120):
         # pylint: disable=too-many-arguments
         super().__init__(on_error_sleep_time)
         self.sender_email = sender_email
-        self.sender_login_credential = sender_login_credential
         self.destination_email = destination_email
         self.smtp_server = smtp_server
 
-        self._validate_login_credential()
+        # login and TTLS connection
+        self.smtp_server.starttls()
+        self.smtp_server.login(self.sender_email, sender_login_credential)
 
     def send_notification(self, message: str):
         """
@@ -199,16 +204,8 @@ class EmailNotificator(Notification):
             message (str): The message of the email.
 
         """
-
-        self.smtp_server.helo()
-        self.smtp_server.starttls()
-
-        self.smtp_server.login(self.sender_email, self.sender_login_credential)
-
         subject = "Python script notification email"
         content = 'Subject: %s\n\n%s' % (subject, message)
-
-        self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
 
         try:
             self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
@@ -220,16 +217,10 @@ class EmailNotificator(Notification):
             try:
                 self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
             except SMTPRecipientsRefused:
-                warnings.warn("Second error when trying to send notification, will abort.", Warning)
-                pass
-        finally:
-            self.smtp_server.close()
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
-    def _validate_login_credential(self):
-        self.smtp_server.helo()
-        self.smtp_server.starttls()
-
-        self.smtp_server.login(self.sender_email, self.sender_login_credential)
+    def __del__(self):
+        self.smtp_server.quit()
 
 
 class ChannelNotificator(Notification):
@@ -277,8 +268,7 @@ class ChannelNotificator(Notification):
             try:
                 self.notifier.send(message)
             except requests.exceptions.HTTPError:
-                warnings.warn("Second error when trying to send notification, will abort.", Warning)
-                pass
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
 
 class FacebookMessengerNotificator(Notification):
@@ -324,8 +314,7 @@ class FacebookMessengerNotificator(Notification):
             try:
                 self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
             except FBchatException:
-                warnings.warn("Second error when trying to send notification, will abort.", Warning)
-                pass
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
     def __del__(self):
         self.fb_client.logout()
@@ -379,5 +368,4 @@ class TeamsNotificator(Notification):
             try:
                 self.teams_hook.text(message)
             except FBchatException:
-                warnings.warn("Second error when trying to send notification, will abort.", Warning)
-                pass
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
