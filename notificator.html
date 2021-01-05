@@ -262,33 +262,27 @@ retry one more time. Time is in seconds.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Using gmail server:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sender_email</span> <span class="o">=</span> <span class="s2">&quot;my_email&quot;</span>
+<span class="n">sender_login_credential</span> <span class="o">=</span> <span class="s2">&quot;my_password&quot;</span>
+<span class="n">destination_email</span> <span class="o">=</span> <span class="n">sender_email</span>
+<span class="n">smtp_server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s1">&#39;smtp.gmail.com&#39;</span><span class="p">,</span> <span class="mi">587</span><span class="p">)</span>
 
-    <span class="n">sender_email</span> <span class="o">=</span> <span class="s2">&quot;my_email&quot;</span>
-    <span class="n">sender_login_credential</span> <span class="o">=</span> <span class="s2">&quot;my_password&quot;</span>
-    <span class="n">destination_email</span> <span class="o">=</span> <span class="n">sender_email</span>
-    <span class="n">smtp_server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s1">&#39;smtp.gmail.com&#39;</span><span class="p">,</span> <span class="mi">587</span><span class="p">)</span>
-
-    <span class="n">notif</span> <span class="o">=</span> <span class="n">EmailNotificator</span><span class="p">(</span><span class="n">sender_email</span><span class="p">,</span> <span class="n">sender_login_credential</span><span class="p">,</span>
-                                   <span class="n">destination_email</span><span class="p">,</span> <span class="n">smtp_server</span><span class="p">)</span>
-    <span class="n">notif</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">notif</span> <span class="o">=</span> <span class="n">EmailNotificator</span><span class="p">(</span><span class="n">sender_email</span><span class="p">,</span> <span class="n">sender_login_credential</span><span class="p">,</span>
+                               <span class="n">destination_email</span><span class="p">,</span> <span class="n">smtp_server</span><span class="p">)</span>
+<span class="n">notif</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Using hotmail server:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sender_email</span> <span class="o">=</span> <span class="s2">&quot;my_email&quot;</span>
+<span class="n">sender_login_credential</span> <span class="o">=</span> <span class="s2">&quot;my_password&quot;</span>
+<span class="n">destination_email</span> <span class="o">=</span> <span class="s2">&quot;other_email&quot;</span>
+<span class="n">smtp_server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s1">&#39;smtp.live.com&#39;</span><span class="p">,</span> <span class="mi">587</span><span class="p">)</span>
+
+<span class="n">notif</span> <span class="o">=</span> <span class="n">EmailNotificator</span><span class="p">(</span><span class="n">sender_email</span><span class="p">,</span> <span class="n">sender_login_credential</span><span class="p">,</span>
+                               <span class="n">destination_email</span><span class="p">,</span> <span class="n">smtp_server</span><span class="p">)</span>
+<span class="n">notif</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<blockquote>
-<div><p>sender_email = “my_email”
-sender_login_credential = “my_password”
-destination_email = “other_email”
-smtp_server = smtplib.SMTP(‘smtp.live.com’, 587)</p>
-<dl class="simple">
-<dt>notif = EmailNotificator(sender_email, sender_login_credential,</dt><dd><p>destination_email, smtp_server)</p>
-</dd>
-</dl>
-<p>notif.send_notification(message=”text”)</p>
-</div></blockquote>
 </dd></dl>
 
 </div>
