@@ -35,7 +35,7 @@ class Notification(ABC):
     a notification error.
 
     Args:
-        
+
         on_error_sleep_time (int): When an error occurs for the sending of the notification, it will wait this time to
             retry one more time. Time is in seconds.
     """
@@ -48,7 +48,7 @@ class Notification(ABC):
         Abstract method to send a notification.
 
         Args:
-            
+
             message (str): The message to send as a notification message through the notificator.
         """
         pass
@@ -57,9 +57,8 @@ class Notification(ABC):
         """
         Send a notification error message through the notificator, used with the wrapper.
 
-
         Args:
-            
+
             error (Exception): The exception raised during the script execution.
         """
         notification_error_message = self._parse_error(error)
@@ -71,7 +70,7 @@ class Notification(ABC):
         Format the error into a readable text.
 
         Args:
-            
+
             error (Exception): The exception raised during the script execution.
 
         Returns:
@@ -118,6 +117,7 @@ class SlackNotificator(Notification):
         Send a notification message to the webhook url.
 
         Args:
+
             message (str): The message to send as a notification message to the webhook url.
 
         """
@@ -263,7 +263,7 @@ class ChannelNotificator(Notification):
         Send a notification message to the channel.
 
         Args:
-            
+
             message (str): The message to send as a notification message to the channel.
 
         """
@@ -310,7 +310,7 @@ class FacebookMessengerNotificator(Notification):
         Send a notification message to your Facebook messenger.
 
         Args:
-            
+
             message (str): The message to send as a notification message to your Facebook messenger.
 
         """
@@ -364,7 +364,7 @@ class TeamsNotificator(Notification):
         Send a notification message to the webhook url.
 
         Args:
-            
+
             message (str): The message to send as a notification message to the webhook url.
 
         """
