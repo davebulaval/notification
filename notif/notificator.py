@@ -93,9 +93,8 @@ class SlackNotificator(Notification):
 
         webhook_url (str): a webhook url given by Slack to post content into a channel. See
             `here <https://api.slack.com/incoming-webhooks>`_ for more detail.
-        on_error_sleep_time (int): When an error occurs for the sending of the notification, it will wait this time to
-            retry one more time. Time is in seconds.
-            (Default value = 300)
+        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
+            (in seconds) to retry one more time. Default is 120 sec.
 
     Attributes:
 
@@ -111,7 +110,7 @@ class SlackNotificator(Notification):
 
     """
 
-    def __init__(self, webhook_url: str, on_error_sleep_time: int = 300):
+    def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if requests is None:
             raise ImportError("package requests need to be installed to use this class.")
@@ -159,6 +158,8 @@ class EmailNotificator(Notification):
         sender_login_credential (str): The login credential of the sender.
         destination_email (str): The email of the recipient of the notification.
         smtp_server (SMTP): The smtp server.
+        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
+            (in seconds) to retry one more time. Default is 120 sec.
 
     Example:
 
@@ -167,7 +168,7 @@ class EmailNotificator(Notification):
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
                 destination_email = sender_email
-                smtp_server = smtplib.SMTP('smtp.gmail.com',587)
+                smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
 
                 notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
@@ -187,7 +188,7 @@ class EmailNotificator(Notification):
     """
 
     def __init__(self, sender_email: str, sender_login_credential: str, destination_email: str, smtp_server: SMTP,
-                 on_error_sleep_time: int):
+                 on_error_sleep_time: int = 120):
         # pylint: disable=too-many-arguments
         super().__init__(on_error_sleep_time)
         self.sender_email = sender_email
@@ -247,7 +248,9 @@ class ChannelNotificator(Notification):
 
     Args:
 
-        channel_url (str): A channel_rul created on `notify.run <https://notify.run/>`
+        channel_url (str): A channel_rul created on `notify.run <https://notify.run/>`.
+        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
+            (in seconds) to retry one more time. Default is 120 sec.
 
     Attributes:
 
@@ -262,7 +265,7 @@ class ChannelNotificator(Notification):
 
     """
 
-    def __init__(self, channel_url: str, on_error_sleep_time: int):
+    def __init__(self, channel_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if ChannelNotify is None:
             raise ImportError("package notify_run need to be installed to use this class.")
@@ -302,7 +305,9 @@ class FacebookMessengerNotificator(Notification):
 
     Attributes:
 
-        fb_client (Client): A fbchat client
+        fb_client (Client): A fbchat client,
+        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
+            (in seconds) to retry one more time. Default is 120 sec.
 
     Example:
 
@@ -313,7 +318,7 @@ class FacebookMessengerNotificator(Notification):
 
     """
 
-    def __init__(self, email_logging: str, logging_credential: str, on_error_sleep_time: int):
+    def __init__(self, email_logging: str, logging_credential: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if Client is None:
             raise ImportError("package fbchat need to be installed to use this class.")
@@ -359,6 +364,8 @@ class TeamsNotificator(Notification):
     Attributes:
 
         teams_hook (str): The webhook url to push notification to.
+        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
+            (in seconds) to retry one more time. Default is 120 sec.
 
     Example:
 
@@ -369,7 +376,7 @@ class TeamsNotificator(Notification):
 
     """
 
-    def __init__(self, webhook_url: str, on_error_sleep_time: int):
+    def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if pymsteams is None:
             raise ImportError("package pymsteams need to be installed to use this class.")
