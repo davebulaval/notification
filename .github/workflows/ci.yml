@@ -34,8 +34,8 @@ jobs:
           python setup.py develop
       - name: Linting
         run: |
-          yapf --diff --recursive notification/
-          pylint notification/
+          yapf --diff --recursive notif/
+          pylint notif/
       - name: Building doc
         run: |
           cd docs
