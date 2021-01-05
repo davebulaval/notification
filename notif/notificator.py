@@ -48,6 +48,7 @@ class Notification(ABC):
         Abstract method to send a notification.
 
         Args:
+
             message (str): The message to send as a notification message through the notificator.
         """
         pass
@@ -58,6 +59,7 @@ class Notification(ABC):
 
 
         Args:
+
             error (Exception): The exception raised during the script execution.
         """
         notification_error_message = self._parse_error(error)
@@ -69,6 +71,7 @@ class Notification(ABC):
         Format the error into a readable text.
 
         Args:
+
             error (Exception): The exception raised during the script execution.
 
         Returns:
@@ -94,11 +97,6 @@ class SlackNotificator(Notification):
             `here <https://api.slack.com/incoming-webhooks>`_ for more detail.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
-
-    Attributes:
-
-        webhook_url (str): The webhook url to push notification to.
-        headers (dict): The headers of the notification.
 
     Example:
 
@@ -149,13 +147,6 @@ class EmailNotificator(Notification):
         sender_login_credential (str): The login credential of the sender email.
         destination_email (str): The recipient of the email can be the same as the sender_email.
         smtp_server (SMTP): The smtp server to relay the email.
-
-    Attributes:
-
-        sender_email (str): The email of the sender.
-        sender_login_credential (str): The login credential of the sender.
-        destination_email (str): The email of the recipient of the notification.
-        smtp_server (SMTP): The smtp server.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
 
@@ -253,10 +244,6 @@ class ChannelNotificator(Notification):
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
 
-    Attributes:
-
-        notifier (Notify): A notify object to send notification.
-
     Example:
 
         .. code-block:: python
@@ -276,6 +263,7 @@ class ChannelNotificator(Notification):
         Send a notification message to the channel.
 
         Args:
+
             message (str): The message to send as a notification message to the channel.
 
         """
@@ -303,12 +291,6 @@ class FacebookMessengerNotificator(Notification):
         email_logging (str): Your email to login into Facebook.
         logging_credential (str): Your login credential to login into Facebook.
 
-    Attributes:
-
-        fb_client (Client): A fbchat client,
-        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
-            (in seconds) to retry one more time. Default is 120 sec.
-
     Example:
 
         .. code-block:: python
@@ -328,6 +310,7 @@ class FacebookMessengerNotificator(Notification):
         Send a notification message to your Facebook messenger.
 
         Args:
+
             message (str): The message to send as a notification message to your Facebook messenger.
 
         """
@@ -359,10 +342,6 @@ class TeamsNotificator(Notification):
         webhook_url (str): A webhook url given by Microsoft Teams to post content into a channel. See
             `here <https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using>`_
             for more detail.
-
-    Attributes:
-
-        teams_hook (str): The webhook url to push notification to.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
 
@@ -385,6 +364,7 @@ class TeamsNotificator(Notification):
         Send a notification message to the webhook url.
 
         Args:
+            
             message (str): The message to send as a notification message to the webhook url.
 
         """
