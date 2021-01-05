@@ -153,8 +153,6 @@ class EmailNotificator(Notification):
 
         Using gmail server::
 
-            .. code-block:: python
-
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
                 destination_email = sender_email
@@ -166,8 +164,6 @@ class EmailNotificator(Notification):
 
 
         Using hotmail server::
-
-        .. code-block:: python
 
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
