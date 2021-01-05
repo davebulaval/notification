@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>notif.notificator &mdash; Notif 0.4 documentation</title>
+  <title>notif.notificator &mdash; Notif 0.4.1 documentation</title>
   
 
   
@@ -16,7 +16,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -29,7 +32,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -49,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Notif
+            <a href="../../index.html" class="icon icon-home"> Notif
           
 
           
@@ -59,7 +61,7 @@
             
             
               <div class="version">
-                0.4
+                0.4.1
               </div>
             
           
@@ -113,6 +115,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -193,7 +197,6 @@
 <span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of the notification, it will wait this time to</span>
 <span class="sd">            retry one more time. Time is in seconds.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_error_sleep_time</span> <span class="o">=</span> <span class="n">on_error_sleep_time</span>
 
@@ -247,9 +250,8 @@
 
 <span class="sd">        webhook_url (str): a webhook url given by Slack to post content into a channel. See</span>
 <span class="sd">            `here &lt;https://api.slack.com/incoming-webhooks&gt;`_ for more detail.</span>
-<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of the notification, it will wait this time to</span>
-<span class="sd">            retry one more time. Time is in seconds.</span>
-<span class="sd">            (Default value = 300)</span>
+<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
+<span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
 <span class="sd">    Attributes:</span>
 
@@ -264,8 +266,7 @@
 <span class="sd">        notif.send_notification(&quot;The script is finish&quot;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">on_error_sleep_time</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">requests</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;package requests need to be installed to use this class.&quot;</span><span class="p">)</span>
@@ -313,6 +314,8 @@
 <span class="sd">        sender_login_credential (str): The login credential of the sender.</span>
 <span class="sd">        destination_email (str): The email of the recipient of the notification.</span>
 <span class="sd">        smtp_server (SMTP): The smtp server.</span>
+<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
+<span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
 <span class="sd">    Example:</span>
 
@@ -321,7 +324,7 @@
 <span class="sd">                sender_email = &quot;my_email&quot;</span>
 <span class="sd">                sender_login_credential = &quot;my_password&quot;</span>
 <span class="sd">                destination_email = sender_email</span>
-<span class="sd">                smtp_server = smtplib.SMTP(&#39;smtp.gmail.com&#39;,587)</span>
+<span class="sd">                smtp_server = smtplib.SMTP(&#39;smtp.gmail.com&#39;, 587)</span>
 
 <span class="sd">                notif = EmailNotificator(sender_email, sender_login_credential,</span>
 <span class="sd">                                               destination_email, smtp_server)</span>
@@ -339,9 +342,12 @@
 <span class="sd">                notif.send_notification(message=&quot;text&quot;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sender_login_credential</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">destination_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">smtp_server</span><span class="p">:</span> <span class="n">SMTP</span><span class="p">,</span>
-                 <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">sender_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">sender_login_credential</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">destination_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">smtp_server</span><span class="p">:</span> <span class="n">SMTP</span><span class="p">,</span>
+                 <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">):</span>
         <span class="c1"># pylint: disable=too-many-arguments</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">on_error_sleep_time</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span> <span class="o">=</span> <span class="n">sender_email</span>
@@ -401,7 +407,9 @@
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        channel_url (str): A channel_rul created on `notify.run &lt;https://notify.run/&gt;`</span>
+<span class="sd">        channel_url (str): A channel_rul created on `notify.run &lt;https://notify.run/&gt;`.</span>
+<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
+<span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
 <span class="sd">    Attributes:</span>
 
@@ -415,8 +423,7 @@
 <span class="sd">            notif.send_notification(&#39;Hi there!&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">on_error_sleep_time</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ChannelNotify</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;package notify_run need to be installed to use this class.&quot;</span><span class="p">)</span>
@@ -456,7 +463,9 @@
 
 <span class="sd">    Attributes:</span>
 
-<span class="sd">        fb_client (Client): A fbchat client</span>
+<span class="sd">        fb_client (Client): A fbchat client,</span>
+<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
+<span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
 <span class="sd">    Example:</span>
 
@@ -466,8 +475,7 @@
 <span class="sd">            notif.send_notification(message=&quot;test&quot;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email_logging</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">logging_credential</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email_logging</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">logging_credential</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">on_error_sleep_time</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;package fbchat need to be installed to use this class.&quot;</span><span class="p">)</span>
@@ -513,6 +521,8 @@
 <span class="sd">    Attributes:</span>
 
 <span class="sd">        teams_hook (str): The webhook url to push notification to.</span>
+<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
+<span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
 <span class="sd">    Example:</span>
 
@@ -522,8 +532,7 @@
 <span class="sd">        notif.send_notification(&quot;The script is finish&quot;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">on_error_sleep_time</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pymsteams</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;package pymsteams need to be installed to use this class.&quot;</span><span class="p">)</span>
@@ -556,28 +565,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2019, David Beauchemin
+        &#169; Copyright 2019, David Beauchemin.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
