@@ -206,6 +206,7 @@
 <span class="sd">        Abstract method to send a notification.</span>
 
 <span class="sd">        Args:</span>
+
 <span class="sd">            message (str): The message to send as a notification message through the notificator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
@@ -214,8 +215,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a notification error message through the notificator, used with the wrapper.</span>
 
-
 <span class="sd">        Args:</span>
+
 <span class="sd">            error (Exception): The exception raised during the script execution.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">notification_error_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
@@ -227,6 +228,7 @@
 <span class="sd">        Format the error into a readable text.</span>
 
 <span class="sd">        Args:</span>
+
 <span class="sd">            error (Exception): The exception raised during the script execution.</span>
 
 <span class="sd">        Returns:</span>
@@ -253,11 +255,6 @@
 <span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
 <span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
-<span class="sd">    Attributes:</span>
-
-<span class="sd">        webhook_url (str): The webhook url to push notification to.</span>
-<span class="sd">        headers (dict): The headers of the notification.</span>
-
 <span class="sd">    Example:</span>
 
 <span class="sd">    .. code-block:: python</span>
@@ -278,6 +275,7 @@
 <span class="sd">        Send a notification message to the webhook url.</span>
 
 <span class="sd">        Args:</span>
+
 <span class="sd">            message (str): The message to send as a notification message to the webhook url.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -307,13 +305,6 @@
 <span class="sd">        sender_login_credential (str): The login credential of the sender email.</span>
 <span class="sd">        destination_email (str): The recipient of the email can be the same as the sender_email.</span>
 <span class="sd">        smtp_server (SMTP): The smtp server to relay the email.</span>
-
-<span class="sd">    Attributes:</span>
-
-<span class="sd">        sender_email (str): The email of the sender.</span>
-<span class="sd">        sender_login_credential (str): The login credential of the sender.</span>
-<span class="sd">        destination_email (str): The email of the recipient of the notification.</span>
-<span class="sd">        smtp_server (SMTP): The smtp server.</span>
 <span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
 <span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
@@ -411,10 +402,6 @@
 <span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
 <span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
-<span class="sd">    Attributes:</span>
-
-<span class="sd">        notifier (Notify): A notify object to send notification.</span>
-
 <span class="sd">    Example:</span>
 
 <span class="sd">        .. code-block:: python</span>
@@ -434,6 +421,7 @@
 <span class="sd">        Send a notification message to the channel.</span>
 
 <span class="sd">        Args:</span>
+
 <span class="sd">            message (str): The message to send as a notification message to the channel.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -461,12 +449,6 @@
 <span class="sd">        email_logging (str): Your email to login into Facebook.</span>
 <span class="sd">        logging_credential (str): Your login credential to login into Facebook.</span>
 
-<span class="sd">    Attributes:</span>
-
-<span class="sd">        fb_client (Client): A fbchat client,</span>
-<span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
-<span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
-
 <span class="sd">    Example:</span>
 
 <span class="sd">        .. code-block:: python</span>
@@ -486,6 +468,7 @@
 <span class="sd">        Send a notification message to your Facebook messenger.</span>
 
 <span class="sd">        Args:</span>
+
 <span class="sd">            message (str): The message to send as a notification message to your Facebook messenger.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -517,10 +500,6 @@
 <span class="sd">        webhook_url (str): A webhook url given by Microsoft Teams to post content into a channel. See</span>
 <span class="sd">            `here &lt;https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using&gt;`_</span>
 <span class="sd">            for more detail.</span>
-
-<span class="sd">    Attributes:</span>
-
-<span class="sd">        teams_hook (str): The webhook url to push notification to.</span>
 <span class="sd">        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time</span>
 <span class="sd">            (in seconds) to retry one more time. Default is 120 sec.</span>
 
@@ -543,6 +522,7 @@
 <span class="sd">        Send a notification message to the webhook url.</span>
 
 <span class="sd">        Args:</span>
+
 <span class="sd">            message (str): The message to send as a notification message to the webhook url.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
