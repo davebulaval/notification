@@ -30,18 +30,12 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install -r docs/requirements.txt
-          pip install -r tests/requirements.txt
           pip install -r styling_requirements.txt
           python setup.py develop
       - name: Linting
         run: |
           yapf --diff --recursive notification/
-          yapf --diff --recursive tests/
           pylint notification/
-          pylint tests/
-      - name: Test with pytest
-        run: |
-          pytest tests/
       - name: Building doc
         run: |
           cd docs

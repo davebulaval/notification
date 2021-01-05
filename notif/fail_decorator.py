@@ -29,7 +29,6 @@ def notification_on_fail(notificator, verbose_level=3):
                 print(t)
 
     """
-
     def wrapper(func):
         def decorated(*args, **kwargs):
             try:

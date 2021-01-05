@@ -39,7 +39,6 @@ class Notification(ABC):
         on_error_sleep_time (int): When an error occurs for the sending of the notification, it will wait this time to
             retry one more time. Time is in seconds.
     """
-
     def __init__(self, on_error_sleep_time: int):
         self.on_error_sleep_time = on_error_sleep_time
 
@@ -109,7 +108,6 @@ class SlackNotificator(Notification):
         notif.send_notification("The script is finish")
 
     """
-
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if requests is None:
@@ -186,8 +184,11 @@ class EmailNotificator(Notification):
                 notif.send_notification(message="text")
 
     """
-
-    def __init__(self, sender_email: str, sender_login_credential: str, destination_email: str, smtp_server: SMTP,
+    def __init__(self,
+                 sender_email: str,
+                 sender_login_credential: str,
+                 destination_email: str,
+                 smtp_server: SMTP,
                  on_error_sleep_time: int = 120):
         # pylint: disable=too-many-arguments
         super().__init__(on_error_sleep_time)
@@ -264,7 +265,6 @@ class ChannelNotificator(Notification):
             notif.send_notification('Hi there!')
 
     """
-
     def __init__(self, channel_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if ChannelNotify is None:
@@ -317,7 +317,6 @@ class FacebookMessengerNotificator(Notification):
             notif.send_notification(message="test")
 
     """
-
     def __init__(self, email_logging: str, logging_credential: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if Client is None:
@@ -375,7 +374,6 @@ class TeamsNotificator(Notification):
         notif.send_notification("The script is finish")
 
     """
-
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if pymsteams is None:
