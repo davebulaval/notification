@@ -58,6 +58,19 @@ class Notificator(ABC):
         notification_error_message = self._parse_error(error)
         self.send_notification(message=notification_error_message)
 
+    @abstractmethod
+    def _format_subject(self, subject_message: str) -> str:
+        """
+        Abstract class to format a subject to create a 'title'.
+
+        Args:
+
+            subject_message (str): The message to format.
+
+        Return:
+            A formatted subject message.
+        """
+
     @staticmethod
     def _parse_error(error: Exception) -> str:
         """
@@ -67,7 +80,7 @@ class Notificator(ABC):
 
             error (Exception): The exception raised during the script execution.
 
-        Returns:
+        Return:
             A formatted string base on the error message and error type.
         """
         error_type = type(error)
@@ -106,7 +119,14 @@ class SlackNotificator(Notificator):
         self.webhook_url = webhook_url
         self.headers = {'content-type': 'application/json'}
 
-        self.default_subject_message = "*Python script Slack notification*\n"
+        self.default_subject_message = "Python script Slack notification"
+
+    def _format_subject(self, subject_message: str) -> str:
+        """
+        We use Markdown formatting as specified in Slack
+        `documentation <https://api.slack.com/reference/surfaces/formatting>`_.
+        """
+        return f"*{subject_message}*\n"
 
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
@@ -117,13 +137,13 @@ class SlackNotificator(Notificator):
             message (str): The message to send as a notification message to the webhook url.
 
             subject (str): The subject of the notification. If None, the default message
-                '*Python script Slack notification*' is used. We use '*' to make bold the subject.
-                See `the documentation <https://api.slack.com/reference/surfaces/formatting>`_ to learn
-                how to format text using Markdown. By default None.
+                'Python script Slack notification' is used. Note that subject are formatted, text is bolded and
+                a new line is appended after the subject to create a 'title' effect. Default is None.
 
 
         """
         subject = subject if subject is not None else self.default_subject_message
+        subject = self._format_subject(subject)
         message = subject + message
 
         payload_message = {"text": message}
@@ -198,6 +218,12 @@ class EmailNotificator(Notificator):
 
         self.default_subject_message = "Python script notification email"
 
+    def _format_subject(self, subject_message: str) -> str:
+        """
+        None since subject is the subject of the email.
+        """
+        pass
+
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
         Send a notification message to the destination email.
@@ -206,7 +232,7 @@ class EmailNotificator(Notificator):
 
             message (str): The message of the email.
             subject (str): The subject of the email. If None, the default message 'Python script notification email'
-                is used. By default None.
+                is used. Default is None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
@@ -254,7 +280,13 @@ class ChannelNotificator(Notificator):
             raise ImportError("package notify_run need to be installed to use this class.")
         self.notifier = ChannelNotify(endpoint=channel_url)
 
-        self.default_subject_message = "**Python script notification**\n"
+        self.default_subject_message = "Python script notification"
+
+    def _format_subject(self, subject_message: str) -> str:
+        """
+        We use a similar logic as Markdown formatting as specified to highlight the subject.
+        """
+        return f"**{subject_message}**\n"
 
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
@@ -264,11 +296,12 @@ class ChannelNotificator(Notificator):
 
             message (str): The message to send as a notification message to the channel.
             subject (str): The subject of the notification. If None, the default message
-                '**Python script notification**' is used. We use '**' create a highlight pattern and make a sort
-                of title. By default None.
+                'Python script notification' is used. Note that subject are formatted, text are surrounded with '*' and
+                a new line is appended after the subject to create a 'title' effect. Default is None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
+        subject = self._format_subject(subject)
         message = subject + message
         try:
             self.notifier.send(message)
@@ -310,7 +343,14 @@ class TeamsNotificator(Notificator):
             raise ImportError("package pymsteams need to be installed to use this class.")
         self.teams_hook = pymsteams.connectorcard(webhook_url)
 
-        self.default_subject_message = "**Python script Teams notification**\n"
+        self.default_subject_message = "Python script Teams notification"
+
+    def _format_subject(self, subject_message: str) -> str:
+        """
+        We use a similar logic as Markdown formatting as specified in Microsoft Teams
+        `documentation <https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html>`_.
+        """
+        return f"**{subject_message}**\n"
 
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         # pylint: disable=line-too-long
@@ -321,12 +361,12 @@ class TeamsNotificator(Notificator):
 
             message (str): The message to send as a notification message to the webhook url.
             subject (str): The subject of the notification. If None, the default message
-                '**Python script Teams notification**' is used. We use '**' to bold the subject. See
-                `this documentation <https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html>`_
-                to learn how to format text using Markdown. By default None.
+                'Python script Teams notification' is used. Note that subject are formatted, text is bolded and
+                a new line is appended after the subject to create a 'title' effect. Default is None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
+        subject = self._format_subject(subject)
         message = subject + message
 
         self.teams_hook.text(message)
@@ -338,6 +378,6 @@ class TeamsNotificator(Notificator):
                 Warning)
             sleep(self.on_error_sleep_time)
             try:
-                self.teams_hook.text(message)
+                self.teams_hook.send()
             except pymsteams.TeamsWebhookException:
                 warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
