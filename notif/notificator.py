@@ -4,18 +4,12 @@ import warnings
 from abc import ABC, abstractmethod
 from smtplib import SMTPRecipientsRefused
 from time import sleep
+from typing import Union
 
 try:
     import requests
 except ImportError:
     requests = None
-
-try:
-    from fbchat import Client, Message, ThreadType, FBchatException
-except ImportError:
-    Client = None
-    Message = None
-    ThreadType = None
 
 try:
     from notify_run import Notify as ChannelNotify
@@ -43,15 +37,15 @@ class Notification(ABC):
         self.on_error_sleep_time = on_error_sleep_time
 
     @abstractmethod
-    def send_notification(self, message: str) -> None:
+    def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
         Abstract method to send a notification.
 
         Args:
 
             message (str): The message to send as a notification message through the notificator.
+            subject (str): The subject of the notification. If None, the default message is use. By default None.
         """
-        pass
 
     def send_notification_error(self, error: Exception) -> None:
         """
@@ -112,15 +106,25 @@ class SlackNotificator(Notification):
         self.webhook_url = webhook_url
         self.headers = {'content-type': 'application/json'}
 
-    def send_notification(self, message: str) -> None:
+        self.default_subject_message = "*Python script Slack notification*\n"
+
+    def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
         Send a notification message to the webhook url.
 
         Args:
 
             message (str): The message to send as a notification message to the webhook url.
+            subject (str): The subject of the notification. If None, the default message
+                '*Python script Slack notification*\n' is used. We use '*' to make 'subject in bold' and \n for a
+                new line. By default None. See
+                `this documentation <https://api.slack.com/reference/surfaces/formatting>`_
+                to learn how to format text using Markdown.
 
         """
+        subject = subject if subject is not None else self.default_subject_message
+        message = subject + message
+
         payload_message = {"text": message}
         try:
             requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
@@ -180,7 +184,7 @@ class EmailNotificator(Notification):
                  sender_login_credential: str,
                  destination_email: str,
                  smtp_server: smtplib.SMTP,
-                 on_error_sleep_time: int = 120):
+                 on_error_sleep_time: int = 120) -> None:
         # pylint: disable=too-many-arguments
         super().__init__(on_error_sleep_time)
         self.sender_email = sender_email
@@ -191,16 +195,20 @@ class EmailNotificator(Notification):
         self.smtp_server.starttls()
         self.smtp_server.login(self.sender_email, sender_login_credential)
 
-    def send_notification(self, message: str):
+        self.default_subject_message = "Python script notification email"
+
+    def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
         Send a notification message to the destination email.
 
         Args:
 
             message (str): The message of the email.
+            subject (str): The subject of the email. If None, the default message 'Python script notification email'
+                is used. By default None.
 
         """
-        subject = "Python script notification email"
+        subject = subject if subject is not None else self.default_subject_message
         content = 'Subject: %s\n\n%s' % (subject, message)
 
         try:
@@ -235,25 +243,32 @@ class ChannelNotificator(Notification):
 
         .. code-block:: python
 
-            notif = ChannelNotificator(endpoint="https://notify.run/some_channel_id")
+            notif = ChannelNotificator(channel_url="https://notify.run/some_channel_id")
             notif.send_notification('Hi there!')
 
     """
-    def __init__(self, channel_url: str, on_error_sleep_time: int = 120):
+    def __init__(self, channel_url: str, on_error_sleep_time: int = 120) -> None:
         super().__init__(on_error_sleep_time)
         if ChannelNotify is None:
             raise ImportError("package notify_run need to be installed to use this class.")
         self.notifier = ChannelNotify(endpoint=channel_url)
 
-    def send_notification(self, message: str) -> None:
+        self.default_subject_message = "**Python script notification**\n"
+
+    def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
         Send a notification message to the channel.
 
         Args:
 
             message (str): The message to send as a notification message to the channel.
+            subject (str): The subject of the notification. If None, the default message
+                '**Python script notification**\n' is used. We use '**' to highlight and create a sort of title
+                and \n for a new line. By default None.
 
         """
+        subject = subject if subject is not None else self.default_subject_message
+        message = subject + message
         try:
             self.notifier.send(message)
         except requests.exceptions.HTTPError:
@@ -267,57 +282,7 @@ class ChannelNotificator(Notification):
                 warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
 
-class FacebookMessengerNotificator(Notification):
-    # pylint: disable=line-too-long
-    """
-    Wrapper around fbchat to send a notification through Facebook messenger to yourself.
-
-    Args:
-
-        email_logging (str): Your email to login into Facebook.
-        logging_credential (str): Your login credential to login into Facebook.
-
-    Example:
-
-        .. code-block:: python
-
-            notif = FacebookMessengerNotificator('email', 'password')
-            notif.send_notification(message="test")
-
-    """
-    def __init__(self, email_logging: str, logging_credential: str, on_error_sleep_time: int = 120):
-        super().__init__(on_error_sleep_time)
-        if Client is None:
-            raise ImportError("package fbchat need to be installed to use this class.")
-        self.fb_client = Client(email_logging, logging_credential)
-
-    def send_notification(self, message: str) -> None:
-        """
-        Send a notification message to your Facebook messenger.
-
-        Args:
-
-            message (str): The message to send as a notification message to your Facebook messenger.
-
-        """
-        try:
-            self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
-        except FBchatException:
-            warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
-            sleep(self.on_error_sleep_time)
-            try:
-                self.fb_client.send(Message(text=message), thread_id=self.fb_client.uid, thread_type=ThreadType.USER)
-            except FBchatException:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
-
-    def __del__(self):
-        self.fb_client.logout()
-
-
 class TeamsNotificator(Notification):
-    # pylint: disable=line-too-long
     # pylint: disable=line-too-long
     """
     Notificator to send a notification into a Microsoft Teams channel.
@@ -344,15 +309,26 @@ class TeamsNotificator(Notification):
             raise ImportError("package pymsteams need to be installed to use this class.")
         self.teams_hook = pymsteams.connectorcard(webhook_url)
 
-    def send_notification(self, message: str) -> None:
+        self.default_subject_message = "**Python script Teams notification**\n"
+
+    def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
+        # pylint: disable=line-too-long
         """
         Send a notification message to the webhook url.
 
         Args:
 
             message (str): The message to send as a notification message to the webhook url.
+            subject (str): The subject of the notification. If None, the default message
+                '**Python script Teams notification**\n' is used. We use '**' to make 'subject in bold' and \n for a
+                new line. By default None. See
+                `this documentation <https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html>`_
+                to learn how to format text using Markdown.
 
         """
+        subject = subject if subject is not None else self.default_subject_message
+        message = subject + message
+
         self.teams_hook.text(message)
         try:
             self.teams_hook.send()
@@ -363,5 +339,5 @@ class TeamsNotificator(Notification):
             sleep(self.on_error_sleep_time)
             try:
                 self.teams_hook.text(message)
-            except FBchatException:
+            except pymsteams.TeamsWebhookException:
                 warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)

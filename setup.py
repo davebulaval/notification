@@ -34,7 +34,8 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
     packages=packages,
-    python_requires='>=3',
+    python_requires='>=3.6.1',
+    install_requires=["requests", "notify_run", "pymsteams"],
     description='The notification package for every python project',
     long_description=readme,
     long_description_content_type='text/markdown',

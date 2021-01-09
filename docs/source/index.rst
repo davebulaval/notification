@@ -20,7 +20,6 @@ Use this package to send during, at the end or when failing of a python script a
     - Slack notification
     - Email notification
     - Channel notification
-    - Facebook messenger notification
     - Microsoft Teams notification.
 
 

@@ -35,7 +35,12 @@ jobs:
       - name: Linting
         run: |
           yapf --diff --recursive notif/
+          yapf --diff --recursive tests/
           pylint notif/
+          pylint tests/
+      - name: Test with pytest
+        run: |
+          python -m unittest
       - name: Building doc
         run: |
           cd docs

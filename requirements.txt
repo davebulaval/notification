@@ -1,6 +1,4 @@
-fbchat~=1.9.7
-requests~=2.23.0
+requests
 notify_run
-setuptools~=41.6.0
-notif~=0.3.5
-pymsteams~=0.1.13
+setuptools
+pymsteams
