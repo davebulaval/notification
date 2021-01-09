@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Notificator &mdash; Notif 0.4.2 documentation</title>
+  <title>Notificator &mdash; Notif 0.5 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.4.2
+                0.5
               </div>
             
           
@@ -95,7 +95,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#slack-notificator">Slack Notificator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#email-notificator">Email Notificator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#channel-notificator">Channel Notificator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#facebook-messenger-notificator">Facebook Messenger Notificator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#microsoft-teams-notificator">Microsoft Teams Notificator</a></li>
 </ul>
 </li>
@@ -184,11 +183,14 @@ retry one more time. Time is in seconds.</p>
 </dl>
 <dl class="py method">
 <dt id="notif.notificator.Notification.send_notification">
-<em class="property">abstract </em><code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#Notification.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notification.send_notification" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">subject</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#Notification.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notification.send_notification" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract method to send a notification.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message through the notificator.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message through the notificator.</p></li>
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The subject of the notification. If None, the default message is use. By default None.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -230,11 +232,17 @@ retry one more time. Time is in seconds.</p>
 </div>
 <dl class="py method">
 <dt id="notif.notificator.SlackNotificator.send_notification">
-<code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#SlackNotificator.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.SlackNotificator.send_notification" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">subject</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#SlackNotificator.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.SlackNotificator.send_notification" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a notification message to the webhook url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message to the webhook url.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message to the webhook url.</p></li>
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The subject of the notification. If None, the default message
+‘<em>Python script Slack notification</em>’ is used. We use ‘*’ to make bold the subject.
+See <a class="reference external" href="https://api.slack.com/reference/surfaces/formatting">the documentation</a> to learn
+how to format text using Markdown. By default None.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -303,30 +311,8 @@ the channel.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">notif</span> <span class="o">=</span> <span class="n">ChannelNotificator</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;https://notify.run/some_channel_id&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">notif</span> <span class="o">=</span> <span class="n">ChannelNotificator</span><span class="p">(</span><span class="n">channel_url</span><span class="o">=</span><span class="s2">&quot;https://notify.run/some_channel_id&quot;</span><span class="p">)</span>
 <span class="n">notif</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="s1">&#39;Hi there!&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="facebook-messenger-notificator">
-<h2>Facebook Messenger Notificator<a class="headerlink" href="#facebook-messenger-notificator" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="notif.notificator.FacebookMessengerNotificator">
-<em class="property">class </em><code class="sig-prename descclassname">notif.notificator.</code><code class="sig-name descname">FacebookMessengerNotificator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">email_logging</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">logging_credential</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span> <span class="o">=</span> <span class="default_value">120</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notif/notificator.html#FacebookMessengerNotificator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.FacebookMessengerNotificator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper around fbchat to send a notification through Facebook messenger to yourself.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>email_logging</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Your email to login into Facebook.</p></li>
-<li><p><strong>logging_credential</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Your login credential to login into Facebook.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">notif</span> <span class="o">=</span> <span class="n">FacebookMessengerNotificator</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
-<span class="n">notif</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -341,10 +327,9 @@ the channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – <p>A webhook url given by Microsoft Teams to post content into a channel. See
-<a class="reference external" href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using">here</a>
-for more detail.</p>
-</p></li>
+<li><p><strong>webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A webhook url given by Microsoft Teams to post content into a channel. See
+<a class="reference external" href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using">this</a>
+for more detail.</p></li>
 <li><p><strong>on_error_sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – When an error occurs for the sending of a notification, it will wait this time
 (in seconds) to retry one more time. Default is 120 sec.</p></li>
 </ul>
