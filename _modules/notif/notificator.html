@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>notif.notificator &mdash; Notif 0.5.3 documentation</title>
+  <title>notif.notificator &mdash; Notif 0.5.4 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.5.3
+                0.5.4
               </div>
             
           
@@ -216,6 +216,19 @@
         <span class="n">notification_error_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">notification_error_message</span><span class="p">)</span></div>
 
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_format_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abstract class to format a subject to create a &#39;title&#39;.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            subject_message (str): The message to format.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            A formatted subject message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_parse_error</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -225,7 +238,7 @@
 
 <span class="sd">            error (Exception): The exception raised during the script execution.</span>
 
-<span class="sd">        Returns:</span>
+<span class="sd">        Return:</span>
 <span class="sd">            A formatted string base on the error message and error type.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">error_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
@@ -264,7 +277,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">webhook_url</span> <span class="o">=</span> <span class="n">webhook_url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;*Python script Slack notification*</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;Python script Slack notification&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_format_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        We use Markdown formatting as specified in Slack</span>
+<span class="sd">        `documentation &lt;https://api.slack.com/reference/surfaces/formatting&gt;`_.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;*</span><span class="si">{</span><span class="n">subject_message</span><span class="si">}</span><span class="s2">*</span><span class="se">\n</span><span class="s2">&quot;</span>
 
 <div class="viewcode-block" id="SlackNotificator.send_notification"><a class="viewcode-back" href="../../notificator.html#notif.notificator.SlackNotificator.send_notification">[docs]</a>    <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -275,13 +295,13 @@
 <span class="sd">            message (str): The message to send as a notification message to the webhook url.</span>
 
 <span class="sd">            subject (str): The subject of the notification. If None, the default message</span>
-<span class="sd">                &#39;*Python script Slack notification*&#39; is used. We use &#39;*&#39; to make bold the subject.</span>
-<span class="sd">                See `the documentation &lt;https://api.slack.com/reference/surfaces/formatting&gt;`_ to learn</span>
-<span class="sd">                how to format text using Markdown. By default None.</span>
+<span class="sd">                &#39;Python script Slack notification&#39; is used. Note that subject are formatted, text is bolded and</span>
+<span class="sd">                a new line is appended after the subject to create a &#39;title&#39; effect. Default is None.</span>
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span> <span class="k">if</span> <span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_subject</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">subject</span> <span class="o">+</span> <span class="n">message</span>
 
         <span class="n">payload_message</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">}</span>
@@ -356,6 +376,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;Python script notification email&quot;</span>
 
+    <span class="k">def</span> <span class="nf">_format_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        None since subject is the subject of the email.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
     <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a notification message to the destination email.</span>
@@ -364,7 +390,7 @@
 
 <span class="sd">            message (str): The message of the email.</span>
 <span class="sd">            subject (str): The subject of the email. If None, the default message &#39;Python script notification email&#39;</span>
-<span class="sd">                is used. By default None.</span>
+<span class="sd">                is used. Default is None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span> <span class="k">if</span> <span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span>
@@ -412,7 +438,13 @@
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;package notify_run need to be installed to use this class.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">notifier</span> <span class="o">=</span> <span class="n">ChannelNotify</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">channel_url</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;**Python script notification**</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;Python script notification&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_format_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        We use a similar logic as Markdown formatting as specified to highlight the subject.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;**</span><span class="si">{</span><span class="n">subject_message</span><span class="si">}</span><span class="s2">**</span><span class="se">\n</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -422,11 +454,12 @@
 
 <span class="sd">            message (str): The message to send as a notification message to the channel.</span>
 <span class="sd">            subject (str): The subject of the notification. If None, the default message</span>
-<span class="sd">                &#39;**Python script notification**&#39; is used. We use &#39;**&#39; create a highlight pattern and make a sort</span>
-<span class="sd">                of title. By default None.</span>
+<span class="sd">                &#39;Python script notification&#39; is used. Note that subject are formatted, text are surrounded with &#39;*&#39; and</span>
+<span class="sd">                a new line is appended after the subject to create a &#39;title&#39; effect. Default is None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span> <span class="k">if</span> <span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_subject</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">subject</span> <span class="o">+</span> <span class="n">message</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">notifier</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -468,7 +501,14 @@
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;package pymsteams need to be installed to use this class.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">teams_hook</span> <span class="o">=</span> <span class="n">pymsteams</span><span class="o">.</span><span class="n">connectorcard</span><span class="p">(</span><span class="n">webhook_url</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;**Python script Teams notification**</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span> <span class="o">=</span> <span class="s2">&quot;Python script Teams notification&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_format_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        We use a similar logic as Markdown formatting as specified in Microsoft Teams</span>
+<span class="sd">        `documentation &lt;https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html&gt;`_.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;**</span><span class="si">{</span><span class="n">subject_message</span><span class="si">}</span><span class="s2">**</span><span class="se">\n</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># pylint: disable=line-too-long</span>
@@ -479,12 +519,12 @@
 
 <span class="sd">            message (str): The message to send as a notification message to the webhook url.</span>
 <span class="sd">            subject (str): The subject of the notification. If None, the default message</span>
-<span class="sd">                &#39;**Python script Teams notification**&#39; is used. We use &#39;**&#39; to bold the subject. See</span>
-<span class="sd">                `this documentation &lt;https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html&gt;`_</span>
-<span class="sd">                to learn how to format text using Markdown. By default None.</span>
+<span class="sd">                &#39;Python script Teams notification&#39; is used. Note that subject are formatted, text is bolded and</span>
+<span class="sd">                a new line is appended after the subject to create a &#39;title&#39; effect. Default is None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span> <span class="k">if</span> <span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_subject_message</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_subject</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">subject</span> <span class="o">+</span> <span class="n">message</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">teams_hook</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -496,7 +536,7 @@
                 <span class="ne">Warning</span><span class="p">)</span>
             <span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_error_sleep_time</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">teams_hook</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">teams_hook</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
             <span class="k">except</span> <span class="n">pymsteams</span><span class="o">.</span><span class="n">TeamsWebhookException</span><span class="p">:</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Second error when trying to send notification, will abort sending message.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span></div>
 </pre></div>

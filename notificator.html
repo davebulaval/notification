@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Notificator &mdash; Notif 0.5.3 documentation</title>
+  <title>Notificator &mdash; Notif 0.5.4 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5.3
+                0.5.4
               </div>
             
           
@@ -239,9 +239,8 @@ retry one more time. Time is in seconds.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message to the webhook url.</p></li>
 <li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The subject of the notification. If None, the default message
-‘<em>Python script Slack notification</em>’ is used. We use ‘*’ to make bold the subject.
-See <a class="reference external" href="https://api.slack.com/reference/surfaces/formatting">the documentation</a> to learn
-how to format text using Markdown. By default None.</p></li>
+‘Python script Slack notification’ is used. Note that subject are formatted, text is bolded and
+a new line is appended after the subject to create a ‘title’ effect. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
