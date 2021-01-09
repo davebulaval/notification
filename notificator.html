@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Notificator &mdash; Notif 0.5 documentation</title>
+  <title>Notificator &mdash; Notif 0.5.2 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5
+                0.5.2
               </div>
             
           
@@ -91,7 +91,7 @@
               <p class="caption"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Notificator</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#notification">Notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Notificator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#slack-notificator">Slack Notificator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#email-notificator">Email Notificator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#channel-notificator">Channel Notificator</a></li>
@@ -168,12 +168,12 @@
             
   <div class="section" id="module-notif">
 <span id="notificator"></span><h1>Notificator<a class="headerlink" href="#module-notif" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="notification">
-<h2>Notification<a class="headerlink" href="#notification" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>Notificator<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="notif.notificator.Notification">
-<em class="property">class </em><code class="sig-prename descclassname">notif.notificator.</code><code class="sig-name descname">Notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notif/notificator.html#Notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notification" title="Permalink to this definition">¶</a></dt>
-<dd><p>Abstract class to define a notification. Force implementation of method <cite>send_notification</cite> and specify how to send
+<dt id="notif.notificator.Notificator">
+<em class="property">class </em><code class="sig-prename descclassname">notif.notificator.</code><code class="sig-name descname">Notificator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notif/notificator.html#Notificator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notificator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class to define a notificator. Force implementation of method <cite>send_notification</cite> and specify how to send
 a notification error.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -182,8 +182,8 @@ retry one more time. Time is in seconds.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="notif.notificator.Notification.send_notification">
-<em class="property">abstract </em><code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">subject</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#Notification.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notification.send_notification" title="Permalink to this definition">¶</a></dt>
+<dt id="notif.notificator.Notificator.send_notification">
+<em class="property">abstract </em><code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">subject</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#Notificator.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notificator.send_notification" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract method to send a notification.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -196,8 +196,8 @@ retry one more time. Time is in seconds.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="notif.notificator.Notification.send_notification_error">
-<code class="sig-name descname">send_notification_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.9)">Exception</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#Notification.send_notification_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notification.send_notification_error" title="Permalink to this definition">¶</a></dt>
+<dt id="notif.notificator.Notificator.send_notification_error">
+<code class="sig-name descname">send_notification_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.9)">Exception</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#Notificator.send_notification_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.Notificator.send_notification_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a notification error message through the notificator, used with the wrapper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

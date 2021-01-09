@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>notif.notificator &mdash; Notif 0.5 documentation</title>
+  <title>notif.notificator &mdash; Notif 0.5.2 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.5
+                0.5.2
               </div>
             
           
@@ -180,10 +180,10 @@
     <span class="n">pymsteams</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="Notification"><a class="viewcode-back" href="../../notificator.html#notif.notificator.Notification">[docs]</a><span class="k">class</span> <span class="nc">Notification</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Notificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.Notificator">[docs]</a><span class="k">class</span> <span class="nc">Notificator</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="c1"># pylint: disable=line-too-long</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Abstract class to define a notification. Force implementation of method `send_notification` and specify how to send</span>
+<span class="sd">    Abstract class to define a notificator. Force implementation of method `send_notification` and specify how to send</span>
 <span class="sd">    a notification error.</span>
 
 <span class="sd">    Args:</span>
@@ -194,7 +194,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_error_sleep_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_error_sleep_time</span> <span class="o">=</span> <span class="n">on_error_sleep_time</span>
 
-<div class="viewcode-block" id="Notification.send_notification"><a class="viewcode-back" href="../../notificator.html#notif.notificator.Notification.send_notification">[docs]</a>    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="Notificator.send_notification"><a class="viewcode-back" href="../../notificator.html#notif.notificator.Notificator.send_notification">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Abstract method to send a notification.</span>
@@ -205,7 +205,7 @@
 <span class="sd">            subject (str): The subject of the notification. If None, the default message is use. By default None.</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="Notification.send_notification_error"><a class="viewcode-back" href="../../notificator.html#notif.notificator.Notification.send_notification_error">[docs]</a>    <span class="k">def</span> <span class="nf">send_notification_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Notificator.send_notification_error"><a class="viewcode-back" href="../../notificator.html#notif.notificator.Notificator.send_notification_error">[docs]</a>    <span class="k">def</span> <span class="nf">send_notification_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a notification error message through the notificator, used with the wrapper.</span>
 
@@ -237,7 +237,7 @@
         <span class="k">return</span> <span class="n">formatted_error_message</span></div>
 
 
-<div class="viewcode-block" id="SlackNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.SlackNotificator">[docs]</a><span class="k">class</span> <span class="nc">SlackNotificator</span><span class="p">(</span><span class="n">Notification</span><span class="p">):</span>
+<div class="viewcode-block" id="SlackNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.SlackNotificator">[docs]</a><span class="k">class</span> <span class="nc">SlackNotificator</span><span class="p">(</span><span class="n">Notificator</span><span class="p">):</span>
     <span class="c1"># pylint: disable=line-too-long</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Notificator to send a notification into a Slack channel.</span>
@@ -298,7 +298,7 @@
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Second error when trying to send notification, will abort sending message.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="EmailNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.EmailNotificator">[docs]</a><span class="k">class</span> <span class="nc">EmailNotificator</span><span class="p">(</span><span class="n">Notification</span><span class="p">):</span>
+<div class="viewcode-block" id="EmailNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.EmailNotificator">[docs]</a><span class="k">class</span> <span class="nc">EmailNotificator</span><span class="p">(</span><span class="n">Notificator</span><span class="p">):</span>
     <span class="c1"># pylint: disable=line-too-long</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Notificator to send a notification email.</span>
@@ -386,7 +386,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">smtp_server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="ChannelNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.ChannelNotificator">[docs]</a><span class="k">class</span> <span class="nc">ChannelNotificator</span><span class="p">(</span><span class="n">Notification</span><span class="p">):</span>
+<div class="viewcode-block" id="ChannelNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.ChannelNotificator">[docs]</a><span class="k">class</span> <span class="nc">ChannelNotificator</span><span class="p">(</span><span class="n">Notificator</span><span class="p">):</span>
     <span class="c1"># pylint: disable=line-too-long</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper around notify_run to send a notification to a phone or a desktop. Can have multiple devices in</span>
@@ -441,7 +441,7 @@
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Second error when trying to send notification, will abort sending message.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TeamsNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.TeamsNotificator">[docs]</a><span class="k">class</span> <span class="nc">TeamsNotificator</span><span class="p">(</span><span class="n">Notification</span><span class="p">):</span>
+<div class="viewcode-block" id="TeamsNotificator"><a class="viewcode-back" href="../../notificator.html#notif.notificator.TeamsNotificator">[docs]</a><span class="k">class</span> <span class="nc">TeamsNotificator</span><span class="p">(</span><span class="n">Notificator</span><span class="p">):</span>
     <span class="c1"># pylint: disable=line-too-long</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Notificator to send a notification into a Microsoft Teams channel.</span>
