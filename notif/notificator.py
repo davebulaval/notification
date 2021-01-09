@@ -22,10 +22,10 @@ except ImportError:
     pymsteams = None
 
 
-class Notification(ABC):
+class Notificator(ABC):
     # pylint: disable=line-too-long
     """
-    Abstract class to define a notification. Force implementation of method `send_notification` and specify how to send
+    Abstract class to define a notificator. Force implementation of method `send_notification` and specify how to send
     a notification error.
 
     Args:
@@ -79,7 +79,7 @@ class Notification(ABC):
         return formatted_error_message
 
 
-class SlackNotificator(Notification):
+class SlackNotificator(Notificator):
     # pylint: disable=line-too-long
     """
     Notificator to send a notification into a Slack channel.
@@ -140,7 +140,7 @@ class SlackNotificator(Notification):
                 warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
 
-class EmailNotificator(Notification):
+class EmailNotificator(Notificator):
     # pylint: disable=line-too-long
     """
     Notificator to send a notification email.
@@ -228,7 +228,7 @@ class EmailNotificator(Notification):
         self.smtp_server.quit()
 
 
-class ChannelNotificator(Notification):
+class ChannelNotificator(Notificator):
     # pylint: disable=line-too-long
     """
     Wrapper around notify_run to send a notification to a phone or a desktop. Can have multiple devices in
@@ -283,7 +283,7 @@ class ChannelNotificator(Notification):
                 warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
 
-class TeamsNotificator(Notification):
+class TeamsNotificator(Notificator):
     # pylint: disable=line-too-long
     """
     Notificator to send a notification into a Microsoft Teams channel.

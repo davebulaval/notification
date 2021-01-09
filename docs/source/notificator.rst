@@ -7,9 +7,9 @@ Notificator
 .. automodule:: notif
 .. currentmodule:: notif.notificator
 
-Notification
+Notificator
 ---------------
-.. autoclass:: Notification
+.. autoclass:: Notificator
     :members:
 
 Slack Notificator
