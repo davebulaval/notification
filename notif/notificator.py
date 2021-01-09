@@ -115,11 +115,12 @@ class SlackNotificator(Notification):
         Args:
 
             message (str): The message to send as a notification message to the webhook url.
+
             subject (str): The subject of the notification. If None, the default message
-                '*Python script Slack notification*\n' is used. We use '*' to make 'subject in bold' and \n for a
-                new line. By default None. See
-                `this documentation <https://api.slack.com/reference/surfaces/formatting>`_
-                to learn how to format text using Markdown.
+                '*Python script Slack notification*' is used. We use '*' to make bold the subject.
+                See `the documentation <https://api.slack.com/reference/surfaces/formatting>`_ to learn
+                how to format text using Markdown. By default None.
+
 
         """
         subject = subject if subject is not None else self.default_subject_message
@@ -263,8 +264,8 @@ class ChannelNotificator(Notification):
 
             message (str): The message to send as a notification message to the channel.
             subject (str): The subject of the notification. If None, the default message
-                '**Python script notification**\n' is used. We use '**' to highlight and create a sort of title
-                and \n for a new line. By default None.
+                '**Python script notification**' is used. We use '**' create a highlight pattern and make a sort
+                of title. By default None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
@@ -290,7 +291,7 @@ class TeamsNotificator(Notification):
     Args:
 
         webhook_url (str): A webhook url given by Microsoft Teams to post content into a channel. See
-            `here <https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using>`_
+            `this <https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using>`_
             for more detail.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
@@ -320,10 +321,9 @@ class TeamsNotificator(Notification):
 
             message (str): The message to send as a notification message to the webhook url.
             subject (str): The subject of the notification. If None, the default message
-                '**Python script Teams notification**\n' is used. We use '**' to make 'subject in bold' and \n for a
-                new line. By default None. See
+                '**Python script Teams notification**' is used. We use '**' to bold the subject. See
                 `this documentation <https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html>`_
-                to learn how to format text using Markdown.
+                to learn how to format text using Markdown. By default None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
