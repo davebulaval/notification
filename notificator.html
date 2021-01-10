@@ -201,7 +201,7 @@ retry one more time. Time is in seconds.</p>
 <dd><p>Send a notification error message through the notificator, used with the wrapper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.9)"><em>Exception</em></a>) – The exception raised during the script execution.</p>
+<dd class="field-odd"><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.9)"><em>Exception</em></a>) – The exception raise during the script execution.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -218,7 +218,7 @@ retry one more time. Time is in seconds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a webhook url given by Slack to post content into a channel. See
+<li><p><strong>webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a webhook URL given by Slack to post content into a channel. See
 <a class="reference external" href="https://api.slack.com/incoming-webhooks">here</a> for more detail.</p></li>
 <li><p><strong>on_error_sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – When an error occurs for the sending of a notification, it will wait this time
 (in seconds) to retry one more time. Default is 120 sec.</p></li>
@@ -233,14 +233,14 @@ retry one more time. Time is in seconds.</p>
 <dl class="py method">
 <dt id="notif.notificator.SlackNotificator.send_notification">
 <code class="sig-name descname">send_notification</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">subject</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="reference internal" href="_modules/notif/notificator.html#SlackNotificator.send_notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.notificator.SlackNotificator.send_notification" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send a notification message to the webhook url.</p>
+<dd><p>Send a notification message to the webhook URL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message to the webhook url.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The message to send as a notification message to the webhook URL.</p></li>
 <li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The subject of the notification. If None, the default message
-‘Python script Slack notification’ is used. Note that subject are formatted, text is bolded and
-a new line is appended after the subject to create a ‘title’ effect. Default is None.</p></li>
+‘Python script Slack notification’ is used. Note that the subject is formatted, the text is bolded and
+a new line is appended after the subject creates a ‘title’ effect. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -261,7 +261,7 @@ a new line is appended after the subject to create a ‘title’ effect. Default
 <li><p><strong>sender_email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The email of the sender.</p></li>
 <li><p><strong>sender_login_credential</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The login credential of the sender email.</p></li>
 <li><p><strong>destination_email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The recipient of the email can be the same as the sender_email.</p></li>
-<li><p><strong>smtp_server</strong> (<a class="reference external" href="https://docs.python.org/3/library/smtplib.html#smtplib.SMTP" title="(in Python v3.9)"><em>smtplib.SMTP</em></a>) – The smtp server to relay the email.</p></li>
+<li><p><strong>smtp_server</strong> (<a class="reference external" href="https://docs.python.org/3/library/smtplib.html#smtplib.SMTP" title="(in Python v3.9)"><em>smtplib.SMTP</em></a>) – The SMTP server to relay the email.</p></li>
 <li><p><strong>on_error_sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – When an error occurs for the sending of a notification, it will wait this time
 (in seconds) to retry one more time. Default is 120 sec.</p></li>
 </ul>
@@ -326,7 +326,7 @@ the channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A webhook url given by Microsoft Teams to post content into a channel. See
+<li><p><strong>webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A webhook URL given by Microsoft Teams to post content into a channel. See
 <a class="reference external" href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using">this</a>
 for more detail.</p></li>
 <li><p><strong>on_error_sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – When an error occurs for the sending of a notification, it will wait this time
