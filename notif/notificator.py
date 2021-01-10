@@ -53,7 +53,7 @@ class Notificator(ABC):
 
         Args:
 
-            error (Exception): The exception raised during the script execution.
+            error (Exception): The exception raise during the script execution.
         """
         notification_error_message = self._parse_error(error)
         self.send_notification(message=notification_error_message)
@@ -78,7 +78,7 @@ class Notificator(ABC):
 
         Args:
 
-            error (Exception): The exception raised during the script execution.
+            error (Exception): The exception raise during the script execution.
 
         Return:
             A formatted string base on the error message and error type.
@@ -99,7 +99,7 @@ class SlackNotificator(Notificator):
 
     Args:
 
-        webhook_url (str): a webhook url given by Slack to post content into a channel. See
+        webhook_url (str): a webhook URL given by Slack to post content into a channel. See
             `here <https://api.slack.com/incoming-webhooks>`_ for more detail.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
@@ -130,15 +130,15 @@ class SlackNotificator(Notificator):
 
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
-        Send a notification message to the webhook url.
+        Send a notification message to the webhook URL.
 
         Args:
 
-            message (str): The message to send as a notification message to the webhook url.
+            message (str): The message to send as a notification message to the webhook URL.
 
             subject (str): The subject of the notification. If None, the default message
-                'Python script Slack notification' is used. Note that subject are formatted, text is bolded and
-                a new line is appended after the subject to create a 'title' effect. Default is None.
+                'Python script Slack notification' is used. Note that the subject is formatted, the text is bolded and
+                a new line is appended after the subject creates a 'title' effect. Default is None.
 
 
         """
@@ -170,7 +170,7 @@ class EmailNotificator(Notificator):
         sender_email (str): The email of the sender.
         sender_login_credential (str): The login credential of the sender email.
         destination_email (str): The recipient of the email can be the same as the sender_email.
-        smtp_server (smtplib.SMTP): The smtp server to relay the email.
+        smtp_server (smtplib.SMTP): The SMTP server to relay the email.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
             (in seconds) to retry one more time. Default is 120 sec.
 
@@ -296,8 +296,8 @@ class ChannelNotificator(Notificator):
 
             message (str): The message to send as a notification message to the channel.
             subject (str): The subject of the notification. If None, the default message
-                'Python script notification' is used. Note that subject are formatted, text are surrounded with '*' and
-                a new line is appended after the subject to create a 'title' effect. Default is None.
+                'Python script notification' is used. Note that subject are formatted, the text is surrounded with '*'
+                and a new line is appended after the subject creates a 'title' effect. Default is None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
@@ -323,7 +323,7 @@ class TeamsNotificator(Notificator):
 
     Args:
 
-        webhook_url (str): A webhook url given by Microsoft Teams to post content into a channel. See
+        webhook_url (str): A webhook URL given by Microsoft Teams to post content into a channel. See
             `this <https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using>`_
             for more detail.
         on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
@@ -355,14 +355,14 @@ class TeamsNotificator(Notificator):
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         # pylint: disable=line-too-long
         """
-        Send a notification message to the webhook url.
+        Send a notification message to the webhook URL.
 
         Args:
 
-            message (str): The message to send as a notification message to the webhook url.
+            message (str): The message to send as a notification message to the webhook URL.
             subject (str): The subject of the notification. If None, the default message
-                'Python script Teams notification' is used. Note that subject are formatted, text is bolded and
-                a new line is appended after the subject to create a 'title' effect. Default is None.
+                'Python script Teams notification' is used. Note that the subject is formatted, the text is bolded,
+                and a new line is appended after the subject creates a 'title' effect. Default is None.
 
         """
         subject = subject if subject is not None else self.default_subject_message
