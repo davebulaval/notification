@@ -381,3 +381,71 @@ class TeamsNotificator(Notificator):
                 self.teams_hook.send()
             except pymsteams.TeamsWebhookException:
                 warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+
+
+class DiscordNotificator(Notificator):
+    # pylint: disable=line-too-long
+    """
+    Notificator to send a notification into a Slack channel.
+
+    Args:
+
+        webhook_url (str): a webhook URL given by Discord to post content into a channel. See
+            `here <https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks>`_ for more detail.
+        on_error_sleep_time (int): When an error occurs for the sending of a notification, it will wait this time
+            (in seconds) to retry one more time. Default is 120 sec.
+
+    Example:
+
+    .. code-block:: python
+
+        notif = DiscordNotificator(webhook_url="webhook_url")
+        notif.send_notification("The script is finish")
+
+    """
+    def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
+        super().__init__(on_error_sleep_time)
+        if requests is None:
+            raise ImportError("package request need to be installed to use this class.")
+        self.webhook_url = webhook_url
+        self.headers = {'Content-Type': 'application/json'}
+
+        self.default_subject_message = "Python script Discord notification"
+
+    def _format_subject(self, subject_message: str) -> str:
+        """
+        We use Markdown formatting as specified in Discord
+        `documentation <https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params>`_.
+        """
+        return f"**{subject_message}**\n"
+
+    def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
+        """
+        Send a notification message to the webhook URL.
+
+        Args:
+
+            message (str): The message to send as a notification message to the webhook URL.
+
+            subject (str): The subject of the notification. If None, the default message
+                'Python script Discord notification' is used. Note that the subject is formatted, the text is bolded and
+                a new line is appended after the subject creates a 'title' effect. Default is None.
+
+
+        """
+        subject = subject if subject is not None else self.default_subject_message
+        subject = self._format_subject(subject)
+
+        payload_message = {"content": subject + message}
+
+        try:
+            requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
+        except requests.exceptions.HTTPError:
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
+            sleep(self.on_error_sleep_time)
+            try:
+                requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
+            except requests.exceptions.HTTPError:
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
