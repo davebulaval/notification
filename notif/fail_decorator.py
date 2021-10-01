@@ -1,4 +1,4 @@
-# pylint: disable=W0702
+# pylint: disable=W0702, inconsistent-return-statements
 import sys
 import traceback
 

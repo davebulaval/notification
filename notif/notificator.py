@@ -2,7 +2,6 @@ import json
 import smtplib
 import warnings
 from abc import ABC, abstractmethod
-from smtplib import SMTPRecipientsRefused
 from time import sleep
 from typing import Union
 
@@ -36,6 +35,11 @@ class Notificator(ABC):
     def __init__(self, on_error_sleep_time: int):
         self.on_error_sleep_time = on_error_sleep_time
 
+        self._sending_method = None
+        self._sending_payload = None
+        # The default raised error type are HTTPError since most of the error raise are of these type.
+        self._raised_error_type = requests.exceptions.HTTPError
+
     @abstractmethod
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
@@ -46,6 +50,20 @@ class Notificator(ABC):
             message (str): The message to send as a notification message through the notificator.
             subject (str): The subject of the notification. If None, the default message is use. By default None.
         """
+
+    def _send_notification(self):
+        # pylint: disable=not-callable
+        try:
+            self._sending_method(**self._sending_payload)
+        except self._raised_error_type:
+            warnings.warn(
+                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
+                Warning)
+            sleep(self.on_error_sleep_time)
+            try:
+                self._sending_method(**self._sending_payload)
+            except self._raised_error_type:
+                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
 
     def send_notification_error(self, error: Exception) -> None:
         """
@@ -121,6 +139,8 @@ class SlackNotificator(Notificator):
 
         self.default_subject_message = "Python script Slack notification"
 
+        self._sending_method = requests.post
+
     def _format_subject(self, subject_message: str) -> str:
         """
         We use Markdown formatting as specified in Slack
@@ -147,17 +167,8 @@ class SlackNotificator(Notificator):
         message = subject + message
 
         payload_message = {"text": message}
-        try:
-            requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
-        except requests.exceptions.HTTPError:
-            warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
-            sleep(self.on_error_sleep_time)
-            try:
-                requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
-            except requests.exceptions.HTTPError:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+        self._sending_payload = {"url": self.webhook_url, "data": json.dumps(payload_message), "headers": self.headers}
+        self._send_notification()
 
 
 class EmailNotificator(Notificator):
@@ -218,6 +229,10 @@ class EmailNotificator(Notificator):
 
         self.default_subject_message = "Python script notification email"
 
+        self._sending_method = smtp_server.sendmail
+        # The raised error are of a different type then the default HTTPError
+        self._raised_error_type = smtplib.SMTPRecipientsRefused
+
     def _format_subject(self, subject_message: str) -> str:
         """
         None since subject is the subject of the email.
@@ -238,17 +253,8 @@ class EmailNotificator(Notificator):
         subject = subject if subject is not None else self.default_subject_message
         content = 'Subject: %s\n\n%s' % (subject, message)
 
-        try:
-            self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
-        except SMTPRecipientsRefused:
-            warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
-            sleep(self.on_error_sleep_time)
-            try:
-                self.smtp_server.sendmail(self.sender_email, self.destination_email, content)
-            except SMTPRecipientsRefused:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+        self._sending_payload = {"from_addr": self.sender_email, "to_addrs": self.destination_email, "msg": content}
+        self._send_notification()
 
     def __del__(self):
         self.smtp_server.quit()
@@ -282,6 +288,8 @@ class ChannelNotificator(Notificator):
 
         self.default_subject_message = "Python script notification"
 
+        self._sending_method = self.notifier.send
+
     def _format_subject(self, subject_message: str) -> str:
         """
         We use a similar logic as Markdown formatting as specified to highlight the subject.
@@ -303,17 +311,9 @@ class ChannelNotificator(Notificator):
         subject = subject if subject is not None else self.default_subject_message
         subject = self._format_subject(subject)
         message = subject + message
-        try:
-            self.notifier.send(message)
-        except requests.exceptions.HTTPError:
-            warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
-            sleep(self.on_error_sleep_time)
-            try:
-                self.notifier.send(message)
-            except requests.exceptions.HTTPError:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+
+        self._sending_payload = {"message": message}
+        self._send_notification()
 
 
 class TeamsNotificator(Notificator):
@@ -345,6 +345,14 @@ class TeamsNotificator(Notificator):
 
         self.default_subject_message = "Python script Teams notification"
 
+        self._sending_method = self._wrapper_send
+        # The raised error are of a different type then the default HTTPError
+        self._raised_error_type = pymsteams.TeamsWebhookException
+
+    def _wrapper_send(self, message: str) -> None:
+        self.teams_hook.text(message)
+        self.teams_hook.send()
+
     def _format_subject(self, subject_message: str) -> str:
         """
         We use a similar logic as Markdown formatting as specified in Microsoft Teams
@@ -369,24 +377,14 @@ class TeamsNotificator(Notificator):
         subject = self._format_subject(subject)
         message = subject + message
 
-        self.teams_hook.text(message)
-        try:
-            self.teams_hook.send()
-        except pymsteams.TeamsWebhookException:
-            warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
-            sleep(self.on_error_sleep_time)
-            try:
-                self.teams_hook.send()
-            except pymsteams.TeamsWebhookException:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+        self._sending_payload = {"message": message}
+        self._send_notification()
 
 
 class DiscordNotificator(Notificator):
     # pylint: disable=line-too-long
     """
-    Notificator to send a notification into a Dicsord channel.
+    Notificator to send a notification into a Discord channel.
 
     Args:
 
@@ -411,6 +409,8 @@ class DiscordNotificator(Notificator):
         self.headers = {'Content-Type': 'application/json'}
 
         self.default_subject_message = "Python script Discord notification"
+
+        self._sending_method = requests.post
 
     def _format_subject(self, subject_message: str) -> str:
         """
@@ -438,14 +438,5 @@ class DiscordNotificator(Notificator):
 
         payload_message = {"content": subject + message}
 
-        try:
-            requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
-        except requests.exceptions.HTTPError:
-            warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
-            sleep(self.on_error_sleep_time)
-            try:
-                requests.post(self.webhook_url, data=json.dumps(payload_message), headers=self.headers)
-            except requests.exceptions.HTTPError:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+        self._sending_payload = {"url": self.webhook_url, "data": json.dumps(payload_message), "headers": self.headers}
+        self._send_notification()
