@@ -386,7 +386,7 @@ class TeamsNotificator(Notificator):
 class DiscordNotificator(Notificator):
     # pylint: disable=line-too-long
     """
-    Notificator to send a notification into a Slack channel.
+    Notificator to send a notification into a Dicsord channel.
 
     Args:
 
