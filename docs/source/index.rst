@@ -17,10 +17,11 @@ Notif is a easy to use package to send notification from a python script.
 
 Use this package to send during, at the end or when failing of a python script a
 
-    - Slack notification
-    - Email notification
-    - Channel notification
-    - Microsoft Teams notification.
+    - Slack notification,
+    - Email notification,
+    - Channel notification,
+    - Microsoft Teams notification,
+    - Discord.
 
 
 .. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best practices.
@@ -29,7 +30,7 @@ Installation
 ============
 
 Install the stable version of notif:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: sh
 
@@ -37,7 +38,7 @@ Install the stable version of notif:
 
 
 Install the latest version of notif:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: sh
 
