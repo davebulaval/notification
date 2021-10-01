@@ -1,73 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Decorator &mdash; Notif 0.5.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Decorator &mdash; Notif 0.6 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Notificator" href="notificator.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> Notif
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                0.5.4
+                0.6
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,19 +38,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Package Reference</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="notificator.html">Notificator</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Decorator</a><ul>
@@ -97,79 +49,38 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Notif</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Decorator</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/decorator.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="decorator">
-<h1>Decorator<a class="headerlink" href="#decorator" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="decorator">
+<h1>Decorator<a class="headerlink" href="#decorator" title="Permalink to this headline"></a></h1>
 <p>Since the script can often fail, it’s convenient to have a notification. The fail decorator attends to catch any exception and send a notification threw the notificator.</p>
-<div class="section" id="fail-decorator">
-<h2>Fail Decorator<a class="headerlink" href="#fail-decorator" title="Permalink to this headline">¶</a></h2>
+<section id="fail-decorator">
+<h2>Fail Decorator<a class="headerlink" href="#fail-decorator" title="Permalink to this headline"></a></h2>
 <dl class="py function">
-<dt id="notif.fail_decorator.notification_on_fail">
-<code class="sig-prename descclassname">notif.fail_decorator.</code><code class="sig-name descname">notification_on_fail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">notificator</span></em>, <em class="sig-param"><span class="n">verbose_level</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notif/fail_decorator.html#notification_on_fail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notif.fail_decorator.notification_on_fail" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="notif.fail_decorator.notification_on_fail">
+<span class="sig-prename descclassname"><span class="pre">notif.fail_decorator.</span></span><span class="sig-name descname"><span class="pre">notification_on_fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notificator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notif/fail_decorator.html#notification_on_fail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notif.fail_decorator.notification_on_fail" title="Permalink to this definition"></a></dt>
 <dd><p>Decorator to wrap a function to track if the script fail and push notification to a previously set notif.
 Mostly inspire from the <a class="reference external" href="https://github.com/fabric/fabric/tree/1.10">Fabric 1.1</a> wrapper.</p>
 <dl class="field-list simple">
@@ -194,58 +105,41 @@ Mostly inspire from the <a class="reference external" href="https://github.com/f
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="notificator-sacred">
-<h2>Notificator &amp; Sacred<a class="headerlink" href="#notificator-sacred" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="notificator-sacred">
+<h2>Notificator &amp; Sacred<a class="headerlink" href="#notificator-sacred" title="Permalink to this headline"></a></h2>
 <p>Unfortunately, the <cite>fail decorator</cite> is not working with the package (yet) with the <a class="reference external" href="https://pypi.org/project/sacred/">Sacred</a> package.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="notificator.html" class="btn btn-neutral float-left" title="Notificator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019, David Beauchemin.
-
-    </p>
+    <p>&#169; Copyright 2019, David Beauchemin.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
