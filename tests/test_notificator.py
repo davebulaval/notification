@@ -6,7 +6,7 @@ from unittest.mock import patch, call, MagicMock
 import pymsteams
 import requests
 
-from notif.notificator import SlackNotificator, EmailNotificator, ChannelNotificator, TeamsNotificator
+from notif.notificator import SlackNotificator, EmailNotificator, ChannelNotificator, TeamsNotificator, DiscordNotificator
 
 
 class SlackNotificatorTest(unittest.TestCase):
@@ -225,6 +225,53 @@ class TeamsNotificatorTest(unittest.TestCase):
             post_call = [call(self.a_fake_web_hook), call().text(expected_message), call().send(), call().send()]
 
             pymsteams_mock.assert_has_calls(post_call)
+
+
+class DiscordNotificatorTest(unittest.TestCase):
+    def setUp(self):
+        super().setUp()
+        self.a_fake_web_hook = "a_web_hook"
+        self.a_notification = "A normal text."
+        self.default_subject_message = "**Python script Discord notification**\n"
+        self.headers = {'Content-Type': 'application/json'}
+
+        self.discord_notificator = DiscordNotificator(self.a_fake_web_hook,
+                                                      on_error_sleep_time=1)  # 1 second since normal is 120
+
+    @patch("notif.notificator.requests")
+    def test_givenADiscordNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, requests_mock):
+        self.discord_notificator.send_notification(self.a_notification)
+
+        expected_payload_message = {
+            "content": self.default_subject_message + self.a_notification}
+        post_call = [call.post(self.a_fake_web_hook, data=json.dumps(expected_payload_message), headers=self.headers)]
+
+        requests_mock.assert_has_calls(post_call)
+
+    @patch("notif.notificator.requests")
+    def test_givenADiscordNotificator_whenSendNotificationWithSubject_thenSendMessageWithSubject(self, requests_mock):
+        a_user_formatted_subject = "**Here a subject**\n"
+        self.discord_notificator.send_notification(self.a_notification, subject=a_user_formatted_subject)
+
+        expected_payload_message = {
+            "content": a_user_formatted_subject + self.a_notification}
+        post_call = [call.post(self.a_fake_web_hook, data=json.dumps(expected_payload_message), headers=self.headers)]
+
+        requests_mock.assert_has_calls(post_call)
+
+    @patch("notif.notificator.requests.post", side_effect=requests.exceptions.HTTPError)
+    def test_givenADiscordNotificator_whenSendNotificationDoesNotWork_thenWaitTimer(self, requests_mock):
+        with self.assertWarns(Warning):
+            self.discord_notificator.send_notification(self.a_notification)
+
+            expected_payload_message = {
+                "content": self.default_subject_message + self.a_notification}
+            post_call = [
+                call.post(self.a_fake_web_hook, data=json.dumps(expected_payload_message), headers=self.headers),
+                call.post(self.a_fake_web_hook, data=json.dumps(expected_payload_message), headers=self.headers)
+            ]
+
+            requests_mock.assert_has_calls(post_call)
 
 
 if __name__ == "__main__":
