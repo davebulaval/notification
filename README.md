@@ -21,7 +21,7 @@ Use this package to send during, at the end or when failing of a python script a
     
 Read the documentation at [notificationdoc.ca](https://notificationdoc.ca).
 
-Notif is compatible with the __latest version of PyTorch__ and  __Python >= 3.6__.
+Notif is compatible with the latest version of __Python >= 3.6__.
 
 ---------
 
