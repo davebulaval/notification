@@ -23,6 +23,7 @@ Use this package to send during, at the end or when failing of a python script a
     - Microsoft Teams notification,
     - Discord.
 
+Notif is compatible with the latest version of **Python >= 3.6**.
 
 .. warning:: Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the `following <https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories/>`_ for best practices.
 
