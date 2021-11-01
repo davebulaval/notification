@@ -45,6 +45,24 @@ Install the latest version of notif:
 
     pip install -U git+https://github.com/davebulaval/notification.git
 
+Cite
+^^^^
+
+Use the following for the package citation;
+
+.. code-block:: bib
+
+    @misc{notif,
+        title={{Notif - The Notification Package}},
+        author={David Beauchemin},
+        year={2019},
+        note   = {\url{https://notificationdoc.ca/}}
+    }
+
+License
+^^^^^^^
+Notif is LGPLv3 licensed, as found in the `LICENSE file <https://github.com/davebulaval/notification/blob/master/LICENSE>`_.
+
 
 API Reference
 -------------
