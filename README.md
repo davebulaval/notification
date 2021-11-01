@@ -51,5 +51,5 @@ Use the following for the package citation;
 ```
 
 ### License
-Notif is LGPLv3 licensed, as found in the `LICENSE file <https://github.com/davebulaval/notification/blob/master/LICENSE>`_.
+Notif is LGPLv3 licensed, as found in the [LICENSE file](https://github.com/davebulaval/notification/blob/master/LICENSE).
 
