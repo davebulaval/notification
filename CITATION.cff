@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+preferred-citation:
+  type: misc
+  message: "If you use Notif, please cite it as below."
+  authors:
+  - family-names: "Beauchemin"
+    given-names: "David"
+  title: "Notif - The Notification Package"
+  url: "https://notificationdoc.ca/"
+  year: 2019
