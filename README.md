@@ -6,7 +6,7 @@
 
 # Notif - The notification package for every python project
 
-Notif is a easy to use package to send notification from a python script.
+Notif is an easy-to-use package to send notification from a python script.
 
 Use this package to send during, at the end or when failing of a python script a
 
