@@ -1,4 +1,6 @@
+import io
 import json
+import sys
 import unittest
 from smtplib import SMTPRecipientsRefused
 from unittest import TestCase
@@ -12,13 +14,67 @@ from notif.notificator import (
     EmailNotificator,
     ChannelNotificator,
     TeamsNotificator,
-    DiscordNotificator,
+    DiscordNotificator, Notificator,
 )
+
+
+class PrintNotificator(Notificator):
+    def _format_subject(self, subject_message: str) -> str:
+        return f"*{subject_message}*\n"
+
+    def send_notification(self, message, subject=None) -> None:
+        subject = self._format_subject(subject) if subject is not None else ""
+        print(f"{subject}{message}")
+
+
+class CaptureOutputTestCase(TestCase):
+
+    def _capture_output(self):
+        self.test_out = io.StringIO()
+        self.original_output = sys.stdout
+        sys.stdout = self.test_out
+
+
+class PrintNotificatorTest(CaptureOutputTestCase):
+    def setUp(self) -> None:
+        self._capture_output()
+
+    def test_send_notification(self):
+        notificator = PrintNotificator(on_error_sleep_time=1)
+        a_message = "a message is send"
+
+        notificator.send_notification(a_message)
+
+        expected_message = a_message
+        actual = self.test_out.getvalue().strip()
+        self.assertEqual(expected_message, actual)
+
+    def test_send_notification_with_a_subject(self):
+        notificator = PrintNotificator(on_error_sleep_time=1)
+        a_message = "a message is send"
+        a_subject = "Here is a subject"
+
+        notificator.send_notification(a_message, a_subject)
+
+        expected_message = f"*{a_subject}*\n{a_message}"
+        actual = self.test_out.getvalue().strip()
+        self.assertEqual(expected_message, actual)
+
+    def test_send_notification_error(self):
+        notificator = PrintNotificator(on_error_sleep_time=1)
+        a_message_error = "a message error is send"
+        a_error_type = ValueError
+        an_error = a_error_type(a_message_error)
+
+        notificator.send_notification_error(an_error)
+
+        expected_message = f"An error of type {a_error_type} occurred. An the error message is {a_message_error}"
+        actual = self.test_out.getvalue().strip()
+        self.assertEqual(expected_message, actual)
 
 
 class SlackNotificatorTest(TestCase):
     def setUp(self):
-        super().setUp()
         self.a_fake_web_hook = "a_web_hook"
         self.a_notification = "A normal text."
         self.default_subject_message = "*Python script Slack notification*\n"
@@ -84,7 +140,6 @@ class SlackNotificatorTest(TestCase):
 
 class EmailNotificatorTest(unittest.TestCase):
     def setUp(self):
-        super().setUp()
         self.a_fake_sender_email = "email@fake.com"
         self.a_fake_sender_login_credential = "fake_credential"
         self.a_fake_destination_email = self.a_fake_sender_email
@@ -92,7 +147,7 @@ class EmailNotificatorTest(unittest.TestCase):
         self.default_subject_message = "Python script notification email"
 
     def test_givenAEmailNotificator_whenSendNotification_thenSendMessageDefaultSubject(
-        self,
+            self,
     ):
         a_mock_smtp_server = MagicMock()
         email_notificator = EmailNotificator(
@@ -118,7 +173,7 @@ class EmailNotificatorTest(unittest.TestCase):
         a_mock_smtp_server.assert_has_calls(post_call)
 
     def test_givenAEmailNotificator_whenSendNotificationWithSubject_thenSendMessageWithSubject(
-        self,
+            self,
     ):
         a_mock_smtp_server = MagicMock()
         email_notificator = EmailNotificator(
@@ -180,10 +235,14 @@ class EmailNotificatorTest(unittest.TestCase):
 
 class ChannelNotificatorTest(unittest.TestCase):
     def setUp(self):
-        super().setUp()
         self.a_fake_channel_url = "a_channel_url"
         self.a_notification = "A normal text."
         self.default_subject_message = "**Python script notification**\n"
+
+    @patch("notif.notificator.ChannelNotify", None)
+    def test_whenNoRequestsModule_thenRaiseImportError(self):
+        with self.assertRaises(ImportError):
+            ChannelNotificator(self.a_fake_channel_url)
 
     @patch("notif.notificator.ChannelNotify")
     def test_givenAChannelNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, channel_notify_mock):
@@ -201,7 +260,7 @@ class ChannelNotificatorTest(unittest.TestCase):
 
     @patch("notif.notificator.ChannelNotify")
     def test_givenAChannelNotificator_whenSendNotificationWithSubject_thenSendMessageWithSubject(
-        self, channel_notify_mock
+            self, channel_notify_mock
     ):
         a_user_formatted_subject = "Here a subject"
 
@@ -238,11 +297,17 @@ class ChannelNotificatorTest(unittest.TestCase):
 
 class TeamsNotificatorTest(unittest.TestCase):
     def setUp(self):
-        super().setUp()
         self.a_fake_web_hook = "a_web_hook"
         self.a_notification = "A normal text."
         self.default_subject_message = "**Python script Teams notification**\n"
         self.headers = {"content-type": "application/json"}
+
+    @patch("notif.notificator.pymsteams", None)
+    def test_whenNoRequestsModule_thenRaiseImportError(self):
+        with self.assertRaises(ImportError):
+            TeamsNotificator(
+                self.a_fake_web_hook, on_error_sleep_time=1
+            )
 
     @patch("notif.pymsteams.connectorcard")
     def test_givenATeamsNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, pymsteams_mock):
@@ -301,7 +366,6 @@ class TeamsNotificatorTest(unittest.TestCase):
 
 class DiscordNotificatorTest(unittest.TestCase):
     def setUp(self):
-        super().setUp()
         self.a_fake_web_hook = "a_web_hook"
         self.a_notification = "A normal text."
         self.default_subject_message = "**Python script Discord notification**\n"

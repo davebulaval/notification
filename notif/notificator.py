@@ -138,7 +138,7 @@ class SlackNotificator(Notificator):
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if requests is None:
-            raise ImportError("package requests need to be installed to use this class.")
+            raise ImportError("Package requests need to be installed to use this class.")
         self.webhook_url = webhook_url
         self.headers = {"content-type": "application/json"}
 
@@ -300,7 +300,7 @@ class ChannelNotificator(Notificator):
     def __init__(self, channel_url: str, on_error_sleep_time: int = 120) -> None:
         super().__init__(on_error_sleep_time)
         if ChannelNotify is None:
-            raise ImportError("package notify_run need to be installed to use this class.")
+            raise ImportError("Package notify_run need to be installed to use this class.")
         self.notifier = ChannelNotify(endpoint=channel_url)
 
         self.default_subject_message = "Python script notification"
@@ -358,7 +358,7 @@ class TeamsNotificator(Notificator):
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if pymsteams is None:
-            raise ImportError("package pymsteams need to be installed to use this class.")
+            raise ImportError("Package pymsteams need to be installed to use this class.")
         self.teams_hook = pymsteams.connectorcard(webhook_url)
 
         self.default_subject_message = "Python script Teams notification"
@@ -423,7 +423,7 @@ class DiscordNotificator(Notificator):
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if requests is None:
-            raise ImportError("package request need to be installed to use this class.")
+            raise ImportError("Package request need to be installed to use this class.")
         self.webhook_url = webhook_url
         self.headers = {"Content-Type": "application/json"}
 
