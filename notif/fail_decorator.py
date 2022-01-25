@@ -24,25 +24,27 @@ def notification_on_fail(notificator, verbose_level=3):
 
             notif = SlackNotificator(url="webhook_url")
 
-            @notification_on_fail(notif=notif, verbose_level='2')
+            @notification_on_fail(notificator=notif, verbose_level='2')
             def fail_test():
                 print(t)
 
     """
+
     def wrapper(func):
         def decorated(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
-            except:
+            except Exception as error:
                 exception_type, value, _ = sys.exc_info()
                 verbose = str(verbose_level)
-                if verbose == '1':
-                    message = "An error occurred of type {} when running the script.".format(exception_type)
-                elif verbose == '2':
-                    message = "An error occurred when running the script. The error message is: {}".format(value)
+                if verbose == "1":
+                    message = f"An error occurred of type {exception_type} when running the script."
+                elif verbose == "2":
+                    message = f"An error occurred when running the script. The error message is: {value}"
                 else:
                     message = traceback.format_exc()
                 notificator.send_notification(message=message)
+                raise error
 
         return decorated
 
