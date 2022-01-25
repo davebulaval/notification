@@ -32,6 +32,7 @@ class Notificator(ABC):
         on_error_sleep_time (int): When an error occurs for the sending of the notification, it will wait this time to
             retry one more time. Time is in seconds.
     """
+
     def __init__(self, on_error_sleep_time: int):
         self.on_error_sleep_time = on_error_sleep_time
 
@@ -48,7 +49,7 @@ class Notificator(ABC):
         Args:
 
             message (str): The message to send as a notification message through the notificator.
-            subject (str): The subject of the notification. If None, the default message is use. By default None.
+            subject (str): The subject of the notification. If None, the default message is use. By default, None.
         """
 
     def _send_notification(self):
@@ -57,13 +58,17 @@ class Notificator(ABC):
             self._sending_method(**self._sending_payload)
         except self._raised_error_type:
             warnings.warn(
-                "Error when trying to send notification. Will retry in {} seconds.".format(self.on_error_sleep_time),
-                Warning)
+                f"Error when trying to send notification. Will retry in {self.on_error_sleep_time} seconds.",
+                Warning,
+            )
             sleep(self.on_error_sleep_time)
             try:
                 self._sending_method(**self._sending_payload)
             except self._raised_error_type:
-                warnings.warn("Second error when trying to send notification, will abort sending message.", Warning)
+                warnings.warn(
+                    "Second error when trying to send notification, will abort sending message.",
+                    Warning,
+                )
 
     def send_notification_error(self, error: Exception) -> None:
         """
@@ -104,8 +109,7 @@ class Notificator(ABC):
         error_type = type(error)
         error_message = error.args[0]
 
-        formatted_error_message = "An error of type {} occurred. An the error message is {}".format(
-            error_type, error_message)
+        formatted_error_message = f"An error of type {error_type} occurred. An the error message is {error_message}"
 
         return formatted_error_message
 
@@ -130,12 +134,13 @@ class SlackNotificator(Notificator):
         notif.send_notification("The script is finish")
 
     """
+
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if requests is None:
             raise ImportError("package requests need to be installed to use this class.")
         self.webhook_url = webhook_url
-        self.headers = {'content-type': 'application/json'}
+        self.headers = {"content-type": "application/json"}
 
         self.default_subject_message = "Python script Slack notification"
 
@@ -167,7 +172,11 @@ class SlackNotificator(Notificator):
         message = subject + message
 
         payload_message = {"text": message}
-        self._sending_payload = {"url": self.webhook_url, "data": json.dumps(payload_message), "headers": self.headers}
+        self._sending_payload = {
+            "url": self.webhook_url,
+            "data": json.dumps(payload_message),
+            "headers": self.headers,
+        }
         self._send_notification()
 
 
@@ -211,12 +220,15 @@ class EmailNotificator(Notificator):
                 notif.send_notification(message="text")
 
     """
-    def __init__(self,
-                 sender_email: str,
-                 sender_login_credential: str,
-                 destination_email: str,
-                 smtp_server: smtplib.SMTP,
-                 on_error_sleep_time: int = 120) -> None:
+
+    def __init__(
+        self,
+        sender_email: str,
+        sender_login_credential: str,
+        destination_email: str,
+        smtp_server: smtplib.SMTP,
+        on_error_sleep_time: int = 120,
+    ) -> None:
         # pylint: disable=too-many-arguments
         super().__init__(on_error_sleep_time)
         self.sender_email = sender_email
@@ -251,9 +263,13 @@ class EmailNotificator(Notificator):
 
         """
         subject = subject if subject is not None else self.default_subject_message
-        content = 'Subject: %s\n\n%s' % (subject, message)
+        content = f"Subject: {subject}\n\n{message}"
 
-        self._sending_payload = {"from_addr": self.sender_email, "to_addrs": self.destination_email, "msg": content}
+        self._sending_payload = {
+            "from_addr": self.sender_email,
+            "to_addrs": self.destination_email,
+            "msg": content,
+        }
         self._send_notification()
 
     def __del__(self):
@@ -280,6 +296,7 @@ class ChannelNotificator(Notificator):
             notif.send_notification('Hi there!')
 
     """
+
     def __init__(self, channel_url: str, on_error_sleep_time: int = 120) -> None:
         super().__init__(on_error_sleep_time)
         if ChannelNotify is None:
@@ -337,6 +354,7 @@ class TeamsNotificator(Notificator):
         notif.send_notification("The script is finish")
 
     """
+
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if pymsteams is None:
@@ -401,12 +419,13 @@ class DiscordNotificator(Notificator):
         notif.send_notification("The script is finish")
 
     """
+
     def __init__(self, webhook_url: str, on_error_sleep_time: int = 120):
         super().__init__(on_error_sleep_time)
         if requests is None:
             raise ImportError("package request need to be installed to use this class.")
         self.webhook_url = webhook_url
-        self.headers = {'Content-Type': 'application/json'}
+        self.headers = {"Content-Type": "application/json"}
 
         self.default_subject_message = "Python script Discord notification"
 
@@ -438,5 +457,9 @@ class DiscordNotificator(Notificator):
 
         payload_message = {"content": subject + message}
 
-        self._sending_payload = {"url": self.webhook_url, "data": json.dumps(payload_message), "headers": self.headers}
+        self._sending_payload = {
+            "url": self.webhook_url,
+            "data": json.dumps(payload_message),
+            "headers": self.headers,
+        }
         self._send_notification()
