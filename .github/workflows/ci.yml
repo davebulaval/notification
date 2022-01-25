@@ -34,8 +34,7 @@ jobs:
           python setup.py develop
       - name: Linting
         run: |
-          yapf --diff --recursive notif/
-          yapf --diff --recursive tests/
+          black --diff --check .
           pylint notif/
           pylint tests/
       - name: Test with pytest
