@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Decorator &mdash; Notif 0.6.2 documentation</title>
+  <title>Decorator &mdash; Notif 0.6.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
             <a href="index.html" class="icon icon-home"> Notif
           </a>
               <div class="version">
-                0.6.2
+                0.6.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -98,7 +98,7 @@ Mostly inspire from the <a class="reference external" href="https://github.com/f
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">notif</span> <span class="o">=</span> <span class="n">SlackNotificator</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;webhook_url&quot;</span><span class="p">)</span>
 
-<span class="nd">@notification_on_fail</span><span class="p">(</span><span class="n">notif</span><span class="o">=</span><span class="n">notif</span><span class="p">,</span> <span class="n">verbose_level</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="nd">@notification_on_fail</span><span class="p">(</span><span class="n">notificator</span><span class="o">=</span><span class="n">notif</span><span class="p">,</span> <span class="n">verbose_level</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">fail_test</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 </pre></div>

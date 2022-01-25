@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>notif.fail_decorator &mdash; Notif 0.6.2 documentation</title>
+  <title>notif.fail_decorator &mdash; Notif 0.6.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -27,7 +27,7 @@
             <a href="../../index.html" class="icon icon-home"> Notif
           </a>
               <div class="version">
-                0.6.2
+                0.6.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -94,25 +94,27 @@
 
 <span class="sd">            notif = SlackNotificator(url=&quot;webhook_url&quot;)</span>
 
-<span class="sd">            @notification_on_fail(notif=notif, verbose_level=&#39;2&#39;)</span>
+<span class="sd">            @notification_on_fail(notificator=notif, verbose_level=&#39;2&#39;)</span>
 <span class="sd">            def fail_test():</span>
 <span class="sd">                print(t)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                 <span class="n">exception_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
                 <span class="n">verbose</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">verbose_level</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">verbose</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
-                    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;An error occurred of type </span><span class="si">{}</span><span class="s2"> when running the script.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exception_type</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">verbose</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
-                    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;An error occurred when running the script. The error message is: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">verbose</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;An error occurred of type </span><span class="si">{</span><span class="n">exception_type</span><span class="si">}</span><span class="s2"> when running the script.&quot;</span>
+                <span class="k">elif</span> <span class="n">verbose</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;An error occurred when running the script. The error message is: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">message</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
                 <span class="n">notificator</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">error</span>
 
         <span class="k">return</span> <span class="n">decorated</span>
 
