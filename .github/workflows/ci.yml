@@ -39,7 +39,11 @@ jobs:
           pylint tests/
       - name: Test with pytest
         run: |
-          python -m unittest
+          pytest
+      - name: Upload Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          files: ./coverage.xml
       - name: Building doc
         run: |
           cd docs
