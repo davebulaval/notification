@@ -3,6 +3,7 @@
 [![PyPI Status](https://pepy.tech/badge/notif)](https://pepy.tech/project/notif)
 [![Continuous Integration](https://github.com/davebulaval/notification/workflows/Continuous%20Integration/badge.svg)](https://github.com/davebulaval/notification/actions?query=workflow%3A%22Continuous+Integration%22+branch%3Amaster)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![codecov](https://codecov.io/gh/davebulaval/notification/branch/master/graph/badge.svg?token=43ARF9LF94)](https://codecov.io/gh/davebulaval/notification)
 
 # Notif - The notification package for every python project
 
