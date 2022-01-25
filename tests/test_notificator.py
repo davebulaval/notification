@@ -14,7 +14,8 @@ from notif.notificator import (
     EmailNotificator,
     ChannelNotificator,
     TeamsNotificator,
-    DiscordNotificator, Notificator,
+    DiscordNotificator,
+    Notificator,
 )
 
 
@@ -28,7 +29,6 @@ class PrintNotificator(Notificator):
 
 
 class CaptureOutputTestCase(TestCase):
-
     def _capture_output(self):
         self.test_out = io.StringIO()
         self.original_output = sys.stdout
@@ -147,7 +147,7 @@ class EmailNotificatorTest(unittest.TestCase):
         self.default_subject_message = "Python script notification email"
 
     def test_givenAEmailNotificator_whenSendNotification_thenSendMessageDefaultSubject(
-            self,
+        self,
     ):
         a_mock_smtp_server = MagicMock()
         email_notificator = EmailNotificator(
@@ -173,7 +173,7 @@ class EmailNotificatorTest(unittest.TestCase):
         a_mock_smtp_server.assert_has_calls(post_call)
 
     def test_givenAEmailNotificator_whenSendNotificationWithSubject_thenSendMessageWithSubject(
-            self,
+        self,
     ):
         a_mock_smtp_server = MagicMock()
         email_notificator = EmailNotificator(
@@ -260,7 +260,7 @@ class ChannelNotificatorTest(unittest.TestCase):
 
     @patch("notif.notificator.ChannelNotify")
     def test_givenAChannelNotificator_whenSendNotificationWithSubject_thenSendMessageWithSubject(
-            self, channel_notify_mock
+        self, channel_notify_mock
     ):
         a_user_formatted_subject = "Here a subject"
 
@@ -305,9 +305,7 @@ class TeamsNotificatorTest(unittest.TestCase):
     @patch("notif.notificator.pymsteams", None)
     def test_whenNoRequestsModule_thenRaiseImportError(self):
         with self.assertRaises(ImportError):
-            TeamsNotificator(
-                self.a_fake_web_hook, on_error_sleep_time=1
-            )
+            TeamsNotificator(self.a_fake_web_hook, on_error_sleep_time=1)
 
     @patch("notif.pymsteams.connectorcard")
     def test_givenATeamsNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, pymsteams_mock):
