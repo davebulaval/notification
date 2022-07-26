@@ -1,6 +1,6 @@
-import io
+# pylint: disable=attribute-defined-outside-init
+
 import json
-import sys
 import unittest
 from smtplib import SMTPRecipientsRefused
 from unittest import TestCase
@@ -17,6 +17,7 @@ from notif.notificator import (
     DiscordNotificator,
     Notificator,
 )
+from tests.base import CaptureOutputTestCase
 
 
 class PrintNotificator(Notificator):
@@ -26,13 +27,6 @@ class PrintNotificator(Notificator):
     def send_notification(self, message, subject=None) -> None:
         subject = self._format_subject(subject) if subject is not None else ""
         print(f"{subject}{message}")
-
-
-class CaptureOutputTestCase(TestCase):
-    def _capture_output(self):
-        self.test_out = io.StringIO()
-        self.original_output = sys.stdout
-        sys.stdout = self.test_out
 
 
 class PrintNotificatorTest(CaptureOutputTestCase):

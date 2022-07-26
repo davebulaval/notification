@@ -1,18 +1,8 @@
-import io
-import sys
-from unittest import TestCase
+from unittest.mock import MagicMock
 from unittest.mock import call, ANY
 
-from unittest.mock import MagicMock
-
 from notif import notification_on_fail
-
-
-class CaptureOutputTestCase(TestCase):
-    def _capture_output(self):
-        self.test_out = io.StringIO()
-        self.original_output = sys.stdout
-        sys.stdout = self.test_out
+from tests.base import CaptureOutputTestCase
 
 
 class FailDecoratorTest(CaptureOutputTestCase):
