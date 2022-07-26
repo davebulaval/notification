@@ -1,5 +1,6 @@
 <div align="center">
     
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7cc518c9c5f54c4cab83930cba5f958d)](https://app.codacy.com/gh/davebulaval/notification?utm_source=github.com&utm_medium=referral&utm_content=davebulaval/notification&utm_campaign=Badge_Grade_Settings)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/notif)](https://pypi.org/project/notif/)
 [![PyPI Status](https://badge.fury.io/py/notif.svg)](https://badge.fury.io/py/notif)
 [![PyPI Status](https://pepy.tech/badge/notif)](https://pepy.tech/project/notif)
