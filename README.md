@@ -6,7 +6,8 @@
 [![Continuous Integration](https://github.com/davebulaval/notification/workflows/Continuous%20Integration/badge.svg)](https://github.com/davebulaval/notification/actions?query=workflow%3A%22Continuous+Integration%22+branch%3Amaster)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![codecov](https://codecov.io/gh/davebulaval/notification/branch/master/graph/badge.svg?token=43ARF9LF94)](https://codecov.io/gh/davebulaval/notification)
-    
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/91d7eb5c9d974a27a484866fe54635a8)](https://www.codacy.com/gh/davebulaval/notification/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=davebulaval/notification&amp;utm_campaign=Badge_Grade)
+
 </div>
 
 # Notif - The notification package for every python project
@@ -26,7 +27,7 @@ Use this package to send during, at the end or when failing of a python script a
     
 Read the documentation at [notificationdoc.ca](https://notificationdoc.ca).
 
-Notif is compatible with the latest version of __Python >= 3.6__.
+Notif is compatible with the latest version of __Python >= 3.7__.
 
 ---------
 
