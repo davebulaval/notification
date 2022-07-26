@@ -3,6 +3,7 @@
 import json
 import unittest
 from smtplib import SMTPRecipientsRefused
+from typing import List
 from unittest import TestCase
 from unittest.mock import patch, call, MagicMock
 
@@ -74,12 +75,7 @@ class SlackNotificatorTest(TestCase):
         self.default_subject_message = "*Python script Slack notification*\n"
         self.headers = {"content-type": "application/json"}
 
-    @patch("notif.notificator.requests")
-    def test_givenASlackNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, requests_mock):
-        slack_notificator = SlackNotificator(self.a_fake_web_hook)
-        slack_notificator.send_notification(self.a_notification)
-
-        expected_payload_message = {"text": self.default_subject_message + self.a_notification}
+    def _post_call(self, expected_payload_message) -> List:
         post_call = [
             call.post(
                 url=self.a_fake_web_hook,
@@ -87,6 +83,16 @@ class SlackNotificatorTest(TestCase):
                 headers=self.headers,
             )
         ]
+        return post_call
+
+    @patch("notif.notificator.requests")
+    def test_givenASlackNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, requests_mock):
+        slack_notificator = SlackNotificator(self.a_fake_web_hook)
+        slack_notificator.send_notification(self.a_notification)
+
+        expected_payload_message = {"text": self.default_subject_message + self.a_notification}
+
+        post_call = self._post_call(expected_payload_message)
 
         requests_mock.assert_has_calls(post_call)
 
@@ -98,13 +104,8 @@ class SlackNotificatorTest(TestCase):
         slack_notificator.send_notification(self.a_notification, subject=a_user_formatted_subject)
 
         expected_payload_message = {"text": f"*{a_user_formatted_subject}*\n" + self.a_notification}
-        post_call = [
-            call.post(
-                url=self.a_fake_web_hook,
-                data=json.dumps(expected_payload_message),
-                headers=self.headers,
-            )
-        ]
+
+        post_call = self._post_call(expected_payload_message)
 
         requests_mock.assert_has_calls(post_call)
 
@@ -140,6 +141,18 @@ class EmailNotificatorTest(unittest.TestCase):
         self.a_notification = "A normal text."
         self.default_subject_message = "Python script notification email"
 
+    def _post_call(self, expected_content) -> List:
+        post_call = [
+            call.starttls(),
+            call.login(self.a_fake_sender_email, self.a_fake_sender_login_credential),
+            call.sendmail(
+                from_addr=self.a_fake_sender_email,
+                to_addrs=self.a_fake_destination_email,
+                msg=expected_content,
+            ),
+        ]
+        return post_call
+
     def test_givenAEmailNotificator_whenSendNotification_thenSendMessageDefaultSubject(
         self,
     ):
@@ -154,15 +167,8 @@ class EmailNotificatorTest(unittest.TestCase):
         email_notificator.send_notification(self.a_notification)
 
         expected_content = f"Subject: {self.default_subject_message}\n\n{self.a_notification}"
-        post_call = [
-            call.starttls(),
-            call.login(self.a_fake_sender_email, self.a_fake_sender_login_credential),
-            call.sendmail(
-                from_addr=self.a_fake_sender_email,
-                to_addrs=self.a_fake_destination_email,
-                msg=expected_content,
-            ),
-        ]
+
+        post_call = self._post_call(expected_content)
 
         a_mock_smtp_server.assert_has_calls(post_call)
 
@@ -181,15 +187,8 @@ class EmailNotificatorTest(unittest.TestCase):
         email_notificator.send_notification(self.a_notification, subject=a_user_formatted_subject)
 
         expected_content = f"Subject: {a_user_formatted_subject}\n\n{self.a_notification}"
-        post_call = [
-            call.starttls(),
-            call.login(self.a_fake_sender_email, self.a_fake_sender_login_credential),
-            call.sendmail(
-                from_addr=self.a_fake_sender_email,
-                to_addrs=self.a_fake_destination_email,
-                msg=expected_content,
-            ),
-        ]
+
+        post_call = self._post_call(expected_content)
 
         a_mock_smtp_server.assert_has_calls(post_call)
 
@@ -233,6 +232,13 @@ class ChannelNotificatorTest(unittest.TestCase):
         self.a_notification = "A normal text."
         self.default_subject_message = "**Python script notification**\n"
 
+    def _post_call(self, expected_message) -> List:
+        post_call = [
+            call(endpoint=self.a_fake_channel_url),
+            call().send(message=expected_message),
+        ]
+        return post_call
+
     @patch("notif.notificator.ChannelNotify", None)
     def test_whenNoRequestsModule_thenRaiseImportError(self):
         with self.assertRaises(ImportError):
@@ -245,10 +251,8 @@ class ChannelNotificatorTest(unittest.TestCase):
         channel_notificator.send_notification(self.a_notification)
 
         expected_message = self.default_subject_message + self.a_notification
-        post_call = [
-            call(endpoint=self.a_fake_channel_url),
-            call().send(message=expected_message),
-        ]
+
+        post_call = self._post_call(expected_message)
 
         channel_notify_mock.assert_has_calls(post_call)
 
@@ -263,10 +267,8 @@ class ChannelNotificatorTest(unittest.TestCase):
         channel_notificator.send_notification(self.a_notification, subject=a_user_formatted_subject)
 
         expected_message = f"**{a_user_formatted_subject}**\n" + self.a_notification
-        post_call = [
-            call(endpoint=self.a_fake_channel_url),
-            call().send(message=expected_message),
-        ]
+
+        post_call = self._post_call(expected_message)
 
         channel_notify_mock.assert_has_calls(post_call)
 
@@ -296,6 +298,14 @@ class TeamsNotificatorTest(unittest.TestCase):
         self.default_subject_message = "**Python script Teams notification**\n"
         self.headers = {"content-type": "application/json"}
 
+    def _post_call(self, expected_message) -> List:
+        post_call = [
+            call(self.a_fake_web_hook),
+            call().text(expected_message),
+            call().send(),
+        ]
+        return post_call
+
     @patch("notif.notificator.pymsteams", None)
     def test_whenNoRequestsModule_thenRaiseImportError(self):
         with self.assertRaises(ImportError):
@@ -309,11 +319,8 @@ class TeamsNotificatorTest(unittest.TestCase):
         self.teams_notificator.send_notification(self.a_notification)
 
         expected_message = self.default_subject_message + self.a_notification
-        post_call = [
-            call(self.a_fake_web_hook),
-            call().text(expected_message),
-            call().send(),
-        ]
+
+        post_call = self._post_call(expected_message)
 
         pymsteams_mock.assert_has_calls(post_call)
 
@@ -327,11 +334,8 @@ class TeamsNotificatorTest(unittest.TestCase):
         self.teams_notificator.send_notification(self.a_notification, subject=a_user_formatted_subject)
 
         expected_message = f"**{a_user_formatted_subject}**\n" + self.a_notification
-        post_call = [
-            call(self.a_fake_web_hook),
-            call().text(expected_message),
-            call().send(),
-        ]
+
+        post_call = self._post_call(expected_message)
 
         pymsteams_mock.assert_has_calls(post_call)
 
@@ -363,13 +367,7 @@ class DiscordNotificatorTest(unittest.TestCase):
         self.default_subject_message = "**Python script Discord notification**\n"
         self.headers = {"Content-Type": "application/json"}
 
-    @patch("notif.notificator.requests")
-    def test_givenADiscordNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, requests_mock):
-        discord_notificator = DiscordNotificator(self.a_fake_web_hook)
-
-        discord_notificator.send_notification(self.a_notification)
-
-        expected_payload_message = {"content": self.default_subject_message + self.a_notification}
+    def _post_call(self, expected_payload_message) -> List:
         post_call = [
             call.post(
                 url=self.a_fake_web_hook,
@@ -377,6 +375,17 @@ class DiscordNotificatorTest(unittest.TestCase):
                 headers=self.headers,
             )
         ]
+        return post_call
+
+    @patch("notif.notificator.requests")
+    def test_givenADiscordNotificator_whenSendNotification_thenSendMessageDefaultSubject(self, requests_mock):
+        discord_notificator = DiscordNotificator(self.a_fake_web_hook)
+
+        discord_notificator.send_notification(self.a_notification)
+
+        expected_payload_message = {"content": self.default_subject_message + self.a_notification}
+
+        post_call = self._post_call(expected_payload_message)
 
         requests_mock.assert_has_calls(post_call)
 
@@ -388,13 +397,8 @@ class DiscordNotificatorTest(unittest.TestCase):
         discord_notificator.send_notification(self.a_notification, subject=a_user_formatted_subject)
 
         expected_payload_message = {"content": "**Here a subject**\n" + self.a_notification}
-        post_call = [
-            call.post(
-                url=self.a_fake_web_hook,
-                data=json.dumps(expected_payload_message),
-                headers=self.headers,
-            )
-        ]
+
+        post_call = self._post_call(expected_payload_message)
 
         requests_mock.assert_has_calls(post_call)
 
