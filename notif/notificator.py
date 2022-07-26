@@ -249,7 +249,7 @@ class EmailNotificator(Notificator):
         """
         None since subject is the subject of the email.
         """
-        pass
+        return subject_message
 
     def send_notification(self, message: str, subject: Union[str, None] = None) -> None:
         """
