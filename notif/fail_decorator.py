@@ -24,7 +24,7 @@ def notification_on_fail(notificator, verbose_level=3):
 
             notif = SlackNotificator(url="webhook_url")
 
-            @notification_on_fail(notificator=notif, verbose_level='2')
+            @notification_on_fail(notificator=notif, verbose_level="2")
             def fail_test():
                 print(t)
 

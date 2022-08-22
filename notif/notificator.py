@@ -84,7 +84,7 @@ class Notificator(ABC):
     @abstractmethod
     def _format_subject(self, subject_message: str) -> str:
         """
-        Abstract class to format a subject to create a 'title'.
+        Abstract class to format a subject to create a "title".
 
         Args:
 
@@ -162,8 +162,8 @@ class SlackNotificator(Notificator):
             message (str): The message to send as a notification message to the webhook URL.
 
             subject (str): The subject of the notification. If None, the default message
-                'Python script Slack notification' is used. Note that the subject is formatted, the text is bolded and
-                a new line is appended after the subject creates a 'title' effect. Default is None.
+                "Python script Slack notification" is used. Note that the subject is formatted, the text is bolded and
+                a new line is appended after the subject creates a "title" effect. Default is None.
 
 
         """
@@ -201,7 +201,7 @@ class EmailNotificator(Notificator):
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
                 destination_email = sender_email
-                smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
+                smtp_server = smtplib.SMTP("smtp.gmail.com", 587)
 
                 notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
@@ -213,7 +213,7 @@ class EmailNotificator(Notificator):
                 sender_email = "my_email"
                 sender_login_credential = "my_password"
                 destination_email = "other_email"
-                smtp_server = smtplib.SMTP('smtp.live.com', 587)
+                smtp_server = smtplib.SMTP("smtp.live.com", 587)
 
                 notif = EmailNotificator(sender_email, sender_login_credential,
                                                destination_email, smtp_server)
@@ -258,7 +258,7 @@ class EmailNotificator(Notificator):
         Args:
 
             message (str): The message of the email.
-            subject (str): The subject of the email. If None, the default message 'Python script notification email'
+            subject (str): The subject of the email. If None, the default message "Python script notification email"
                 is used. Default is None.
 
         """
@@ -293,7 +293,7 @@ class ChannelNotificator(Notificator):
         .. code-block:: python
 
             notif = ChannelNotificator(channel_url="https://notify.run/some_channel_id")
-            notif.send_notification('Hi there!')
+            notif.send_notification("Hi there!")
 
     """
 
@@ -321,7 +321,7 @@ class ChannelNotificator(Notificator):
 
             message (str): The message to send as a notification message to the channel.
             subject (str): The subject of the notification. If None, the default message
-                'Python script notification' is used. Note that subject are formatted, the text is surrounded with '*'
+                "Python script notification" is used. Note that subject are formatted, the text is surrounded with "*"
                 and a new line is appended after the subject creates a 'title' effect. Default is None.
 
         """
