@@ -1,3 +1,5 @@
+# pylint: disable=broad-exception-raised
+
 from unittest.mock import MagicMock
 from unittest.mock import call, ANY
 
