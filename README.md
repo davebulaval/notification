@@ -10,7 +10,7 @@
 
 </div>
 
-# Notif - The notification package for every Python project
+# Notif - The Notification Package for Every Python Project
 
 Notif is an easy-to-use package to send notifications from a Python script.
 
