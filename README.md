@@ -10,11 +10,11 @@
 
 </div>
 
-# Notif - The notification package for every python project
+# Notif - The notification package for every Python project
 
-Notif is an easy-to-use package to send notification from a python script.
+Notif is an easy-to-use package to send notifications from a Python script.
 
-Use this package to send during, at the end or when failing of a python script a
+Use this package to send during, at the end or when failing of a Python script a
 
     - Slack notification,
     - Email notification,
@@ -22,7 +22,7 @@ Use this package to send during, at the end or when failing of a python script a
     - Microsoft Teams notification,
     - Discord.
     
-> Please be careful with your login credential. Use a .env or any other file not publish by your git (configured in .gitignore). Read the [following](https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories) for best pratices.
+> Please be careful with your login credential. Use a .env or any other file not published by your Git (configured in .gitignore). Read the [following](https://stackoverflow.com/questions/2397822/what-is-the-best-practice-for-dealing-with-passwords-in-git-repositories) for best practices.
 
     
 Read the documentation at [notificationdoc.ca](https://notificationdoc.ca).
