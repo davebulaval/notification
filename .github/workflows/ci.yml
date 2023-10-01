@@ -21,7 +21,7 @@ jobs:
           else
             echo "NOTIFICATION_RELEASE_BUILD=0" >> $GITHUB_ENV
           fi
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
